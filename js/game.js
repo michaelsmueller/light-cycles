@@ -21,9 +21,9 @@ class Game {
         this.ctx.fillRect(cycle2.column * this.cellWidth, cycle2.row * this.cellWidth, 9, 9);
     }
     
-    _hasCrashed(lightCycle) {
+    _hasCrashedOwnJetwall(lightCycle) {
         let crashed = false;
-        lightCycle.jetwall.forEach( (position, index) => {
+        lightCycle.jetwall.forEach((position, index) => {
             if (index != 0) {
                 if (position.row === lightCycle.jetwall[0].row && position.column === lightCycle.jetwall[0].column) {
                     crashed = true;
@@ -33,10 +33,29 @@ class Game {
         return crashed;
     }
 
+    _hasCrashedEnemyJetwall(lightCycle, enemyLightCycle) {
+        let crashed = false;
+        enemyLightCycle.jetwall.forEach((position, index) => {
+            if (position.row === lightCycle.jetwall[0].row && position.column === lightCycle.jetwall[0].column) {
+                crashed = true;
+            }
+        });
+        return crashed;
+    }
+
     _update() {
         this._drawJetwall();
-        if (this._hasCrashed(this.player1)) {
+        if (this._hasCrashedOwnJetwall(this.player1)) {
             console.log('Player 1 crashed');
+        }
+        if (this._hasCrashedEnemyJetwall(this.player1, this.player2)) {
+            console.log('Player 1 crashed');
+        }
+        if (this._hasCrashedOwnJetwall(this.player2)) {
+            console.log('Player 2 crashed');
+        }
+        if (this._hasCrashedEnemyJetwall(this.player2, this.player1)) {
+            console.log('Player 2 crashed');
         }
         if (!!game.interval) {
             this.interval = window.requestAnimationFrame(this._update.bind(this));
