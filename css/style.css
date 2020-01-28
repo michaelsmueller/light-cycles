@@ -1,0 +1,17 @@
+body {
+    background-color: #000;
+}
+
+#start {
+    width: 300px;
+    height: 100px;
+    font-size: 30px;
+    color: #000;
+    padding: 10px;
+    border: white;
+}
+
+#game-grid {
+    height: 500px;
+    width: 700px;
+}
