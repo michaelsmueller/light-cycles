@@ -1,10 +1,10 @@
 # Light Cycles
 
-Inspired by __Tron__. The purpose of this game is to "__derez__" (destroy) the enemy "__Light Cycle__" (player 2 or computer). Light Cycles move in straight lines and leave behind solid "__jetwalls__" in their wake. Crashing into any jetwall will cause a player to derez.
+Inspired by __Tron__. The purpose of this game is to "__derez__" (destroy) the enemy "__Light Cycle__." Light Cycles move in straight lines and leave behind solid "__jetwalls__" in their wake. Crashing into any jetwall will cause a player to derez.
 
-The game screen is a two-dimensional board, the "__Game Grid__," that the players race around. The player is represented by a Light Cycle. The player can use one of four keys to change the direction (up, down, right, left) of the Light Cycle.
+The game screen is a two-dimensional board, the "__Game Grid__," that the players race around. The player is represented by a Light Cycle. Each player can use one of four keys to change the direction (up, down, left, right) of their Light Cycle.
 
-The game is over when either player crashes into a jetwall.
+The game is over when either player crashes into a jetwall, including their own.
 
 Extras:
 * Players can use __fusion__ power to accelerate their racer. Each player has a limited quantity of fusion fuel (deuterium or tritium). Fuel appears sporadically on the screen which can be collected to refill the fusion tank.
@@ -31,16 +31,15 @@ HTML5 __Canvas__ and vanilla __JavaScript__
 * Create board
 * Create two players
 * Move player 1
-  * Click keys (up, down, right, left) to change direction.
+  * Keys (up, down, right, left) change direction.
 * Move player 2
-  * Clicks keys (w - up, s - down, d - right, a - left) to change
+  * Keys (w - up, s - down, d - right, a - left) change direction.
 
 * * *
 
 ## BACKLOG
 
 ### Collisions
-* Check if either player has hit Jetwall
 * Game Over
 
 ### Fusion power
@@ -64,8 +63,6 @@ HTML5 __Canvas__ and vanilla __JavaScript__
 * Add music on / off button to Start screen.
 
 ### Player colors
-* Add colors to players
-  * Let user choose color of player with color buttons
 * Add Choose color button to Start Screen
 
 ### Add pause
