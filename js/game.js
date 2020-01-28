@@ -1,24 +1,38 @@
 // jshint esversion: 6
+const player1Config = {
+    startingRow: 1,
+    startingColumn: 1,
+    startingDirection: "right",
+    color: "#00FFFF"    // cyan
+};
+const player2Config = {
+    startingRow: 50,
+    startingColumn: 50,
+    startingDirection: "left",
+    color: "#FF0080"    // fuchsia
+};
 
 class Game {
     constructor(ctx, canvas) {
         console.log(`Canvas width ${canvas.width} height ${canvas.height}`);
         this.ctx = ctx;
         this.cellWidth = 10;
-        this.rows = canvas.width / this.cellWidth;
-        this.columns = canvas.height / this.cellWidth;
-        this.player1 = new LightCycle(canvas.width / this.cellWidth, canvas.height / this.cellWidth, 1);
-        this.player2 = new LightCycle(canvas.width / this.cellWidth, canvas.height / this.cellWidth, 10);
+        this.grid = {
+            maxRows: canvas.height / this.cellWidth,
+            maxColumns: canvas.width / this.cellWidth
+        };
+        this.player1 = new LightCycle(this.grid, player1Config);
+        this.player2 = new LightCycle(this.grid, player2Config);
     }
 
     _drawJetwall() {
-        this.ctx.fillStyle = "#00FFFF";
+        this.ctx.fillStyle = player1Config.color;
         const cycle1 = game.player1.jetwall[0];
-        this.ctx.fillRect(cycle1.column * this.cellWidth, cycle1.row * this.cellWidth, 9, 9);
+        this.ctx.fillRect(cycle1.column * this.cellWidth, cycle1.row * this.cellWidth, 10, 10);
 
-        this.ctx.fillStyle = "#FF0080";
+        this.ctx.fillStyle = player2Config.color;
         const cycle2 = game.player2.jetwall[0];
-        this.ctx.fillRect(cycle2.column * this.cellWidth, cycle2.row * this.cellWidth, 9, 9);
+        this.ctx.fillRect(cycle2.column * this.cellWidth, cycle2.row * this.cellWidth, 10, 10);
     }
     
     _hasCrashedOwnJetwall(lightCycle) {

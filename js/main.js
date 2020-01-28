@@ -2,7 +2,7 @@
 let ctx, game;
 let canvas = document.getElementById('game-grid');
 canvas.width = 800;
-canvas.height = 1000;
+canvas.height = 600;
 ctx = canvas.getContext('2d');
 
 function start() {

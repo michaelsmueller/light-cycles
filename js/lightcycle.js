@@ -1,15 +1,15 @@
 // jshint esversion: 6
 
 class LightCycle {
-    constructor(maxRows, maxColumns, startingRow) {
-      this.startingRow = startingRow;
-      this.jetwall = [
-        { row: this.startingRow, column: 1 },
-      ];
+    constructor(grid, playerConfig) {
+      console.log(`maxRows ${grid.maxRows} maxColumns ${grid.maxColumns}`);
+      this.maxRows = grid.maxRows;
+      this.maxColumns = grid.maxColumns;
+      this.startingRow = playerConfig.startingRow;
+      this.startingColumn = playerConfig.startingColumn;
+      this.direction = playerConfig.startingDirection;
+      this.jetwall = [ { row: this.startingRow, column: this.startingColumn } ];
       this.jetwall = [...this.jetwall];
-      this.maxRows = maxRows;
-      this.maxColumns = maxColumns;
-      this.direction = "right";
       this.intervalId = undefined;
     }
 
