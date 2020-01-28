@@ -10,8 +10,3 @@ body {
     padding: 10px;
     border: white;
 }
-
-#game-grid {
-    height: 500px;
-    width: 700px;
-}
