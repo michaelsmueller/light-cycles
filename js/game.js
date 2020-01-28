@@ -21,8 +21,23 @@ class Game {
         this.ctx.fillRect(cycle2.column * this.cellWidth, cycle2.row * this.cellWidth, 9, 9);
     }
     
+    _hasCrashed(lightCycle) {
+        let crashed = false;
+        lightCycle.jetwall.forEach( (position, index) => {
+            if (index != 0) {
+                if (position.row === lightCycle.jetwall[0].row && position.column === lightCycle.jetwall[0].column) {
+                    crashed = true;
+                }
+            }
+        });
+        return crashed;
+    }
+
     _update() {
         this._drawJetwall();
+        if (this._hasCrashed(this.player1)) {
+            console.log('Player 1 crashed');
+        }
         if (!!game.interval) {
             this.interval = window.requestAnimationFrame(this._update.bind(this));
         }

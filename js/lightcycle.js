@@ -1,14 +1,10 @@
 // jshint esversion: 6
 
 class LightCycle {
-    constructor(maxRows, maxColumns, row) {
-      this.row = row;
+    constructor(maxRows, maxColumns, startingRow) {
+      this.startingRow = startingRow;
       this.jetwall = [
-        { row: this.row, column: 5 },
-        { row: this.row, column: 4 },
-        { row: this.row, column: 3 },
-        { row: this.row, column: 2 },
-        { row: this.row, column: 1 },
+        { row: this.startingRow, column: 1 },
       ];
       this.jetwall = [...this.jetwall];
       this.maxRows = maxRows;
