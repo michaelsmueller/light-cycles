@@ -25,21 +25,24 @@ class Game {
     }
     
     _assignControlsToKeys() {
-        document.addEventListener('keydown', e => {
+        document.addEventListener("keydown", e => {
             console.log(`Keydown ${e.keyCode} ${e.key}`);
+            if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+                e.preventDefault();
+            }
             switch (e.keyCode) {
-            case 38: // up arrow up
-                this.player1.goUp();
-                break;
-            case 40: // down arrow
-                this.player1.goDown();
-                break;
-            case 37: // left arrow
-                this.player1.goLeft();
-                break;
-            case 39: // right arrow
-                this.player1.goRight();
-                break;
+                case 37: // left arrow
+                    this.player1.goLeft();
+                    break;
+                case 38: // up arrow up
+                    this.player1.goUp();
+                    break;
+                case 39: // right arrow
+                    this.player1.goRight();
+                    break;
+                case 40: // down arrow
+                    this.player1.goDown();
+                    break;
             }
         });   
     }

@@ -19,22 +19,16 @@ class LightCycle {
     _moveForward() {
         let cycle = this.jetwall[0];
         switch (this.direction) {
-          case "up":
-            this.jetwall.unshift({
-              row: (cycle.row - 1 + this.maxRows) % this.maxRows,
-              column: cycle.column
-            });
-            break;
-          case "down":
-            this.jetwall.unshift({
-              row: (cycle.row + 1) % this.maxRows,
-              column: cycle.column
-            });
-            break;
           case "left":
             this.jetwall.unshift({
               row: cycle.row,
               column: (cycle.column - 1 + this.maxColumns) % this.maxColumns
+            });
+            break;
+          case "up":
+            this.jetwall.unshift({
+              row: (cycle.row - 1 + this.maxRows) % this.maxRows,
+              column: cycle.column
             });
             break;
           case "right":
@@ -43,7 +37,19 @@ class LightCycle {
               column: (cycle.column + 1) % this.maxColumns
             });
             break;
+          case "down":
+            this.jetwall.unshift({
+              row: (cycle.row + 1) % this.maxRows,
+              column: cycle.column
+            });
+            break;
         }
+    }
+
+    goLeft() {
+      if (this.direction === "up" || this.direction === "down") {
+        this.direction = "left";
+      }
     }
 
     goUp() {
@@ -52,21 +58,15 @@ class LightCycle {
       }
     }
   
-    goDown() {
-      if (this.direction === "left" || this.direction === "right") {
-        this.direction = "down";
-      }
-    }
-  
-    goLeft() {
-      if (this.direction === "up" || this.direction === "down") {
-        this.direction = "left";
-      }
-    }
-  
     goRight() {
       if (this.direction === "up" || this.direction === "down") {
         this.direction = "right";
+      }
+    }
+
+    goDown() {
+      if (this.direction === "left" || this.direction === "right") {
+        this.direction = "down";
       }
     }
 
