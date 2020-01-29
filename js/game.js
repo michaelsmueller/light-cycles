@@ -132,9 +132,9 @@ class Game {
                 case 83: // s
                     this.player2.goDown();
                     break;
-                // case 81: // q
-                //     this.player2.accelerate();
-                //     break;
+                case 81: // q
+                    this.player2.accelerate();
+                    break;
             }
         });   
     }

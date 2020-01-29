@@ -72,7 +72,7 @@ class LightCycle {
       // this.intervalId = setInterval(this._moveForward.bind(this), this.velocity);
       let counter = 1;
       const repeatSetTimout = function () {
-        console.log(`Counter is ${counter}`);
+        // console.log(`Counter is ${counter}`);
         counter += 1;
         this._moveForward();
         this.timeoutId = setTimeout(repeatSetTimout.bind(this), this.velocity);
@@ -80,12 +80,12 @@ class LightCycle {
       this.timeoutId = setTimeout(repeatSetTimout.bind(this), this.velocity);
     }
 
-    // accelerate() {
-    //   console.log("Accelerating");
-    //   clearInterval(this.intervalId);
-    //   this.velocity = 50;
-    //   this.intervalId = setInterval(this._moveForward.bind(this), this.velocity);
-    // }
+    accelerate() {
+      console.log("Accelerating");
+      // clearInterval(this.intervalId);
+      this.velocity = 50;
+      // this.intervalId = setInterval(this._moveForward.bind(this), this.velocity);
+    }
 
     stop() {
       clearInterval(this.intervalId);
