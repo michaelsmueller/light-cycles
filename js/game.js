@@ -6,6 +6,7 @@ const player1Config = {
     startingDirection: "right",
     color: "#00FFFF"    // cyan
 };
+
 const player2Config = {
     startingRow: 50,
     startingColumn: 50,
@@ -137,9 +138,14 @@ class Game {
         });   
     }
 
+    clearGrid() {
+        this.ctx.clearRect(0, 0, 1000, 1000);
+    }
+
     start() {
-        game.player1.move();
-        game.player2.move();
+        this.clearGrid();
+        this.player1.move();
+        this.player2.move();
         this.interval = window.requestAnimationFrame(this._update.bind(this));
         this._assignControlsToKeys();
     }
