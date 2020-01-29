@@ -2,8 +2,8 @@
 
 let ctx, game;
 let canvas = document.getElementById('game-grid');
-canvas.width = 800;
-canvas.height = 600;
+canvas.width = 900;
+canvas.height = 700;
 ctx = canvas.getContext('2d');
 
 function gameOver() {
