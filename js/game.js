@@ -1,4 +1,5 @@
 // jshint esversion: 6
+
 const player1Config = {
     startingRow: 1,
     startingColumn: 1,
@@ -57,19 +58,24 @@ class Game {
         return crashed;
     }
 
+    _hasDefeated(enemyLightCycle, lightCycle) {
+        let lightCycleCrashed = false;
+        if (this._hasCrashedOwnJetwall(lightCycle)) {
+            lightCycleCrashed = true;
+        }
+        if (this._hasCrashedEnemyJetwall(lightCycle, enemyLightCycle)) {
+            lightCycleCrashed = true;
+        }
+        return lightCycleCrashed;
+    }
+
     _update() {
         this._drawJetwall();
-        if (this._hasCrashedOwnJetwall(this.player1)) {
-            console.log('Player 1 crashed');
+        if (this._hasDefeated(this.player1, this.player2)) {
+            console.log('player 1 wins');
         }
-        if (this._hasCrashedEnemyJetwall(this.player1, this.player2)) {
-            console.log('Player 1 crashed');
-        }
-        if (this._hasCrashedOwnJetwall(this.player2)) {
-            console.log('Player 2 crashed');
-        }
-        if (this._hasCrashedEnemyJetwall(this.player2, this.player1)) {
-            console.log('Player 2 crashed');
+        if (this._hasDefeated(this.player2, this.player1)) {
+            console.log('player 2 wins');
         }
         if (!!game.interval) {
             this.interval = window.requestAnimationFrame(this._update.bind(this));
@@ -96,7 +102,6 @@ class Game {
                     this.player1.goDown();
                     break;
             }
-
             switch (e.keyCode) {
                 case 65: // a
                     this.player2.goLeft();

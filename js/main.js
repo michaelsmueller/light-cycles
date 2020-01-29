@@ -1,9 +1,15 @@
 // jshint esversion: 6
+
 let ctx, game;
 let canvas = document.getElementById('game-grid');
 canvas.width = 800;
 canvas.height = 600;
 ctx = canvas.getContext('2d');
+
+function gameOver() {
+    console.log("Game over");
+    canvas.style = "display: none";
+}
 
 function start() {
     console.log('Instantiating game');
