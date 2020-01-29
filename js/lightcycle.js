@@ -69,7 +69,15 @@ class LightCycle {
     }
 
     move() {
-      this.intervalId = setInterval(this._moveForward.bind(this), this.velocity);
+      // this.intervalId = setInterval(this._moveForward.bind(this), this.velocity);
+      let counter = 1;
+      const repeatSetTimout = function () {
+        console.log(`Counter is ${counter}`);
+        counter += 1;
+        this._moveForward();
+        this.timeoutId = setTimeout(repeatSetTimout.bind(this), this.velocity);
+      };
+      this.timeoutId = setTimeout(repeatSetTimout.bind(this), this.velocity);
     }
 
     // accelerate() {

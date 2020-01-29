@@ -5,6 +5,7 @@ const player1Config = {
     startingColumn: 1,
     startingDirection: "right",
     color: "#00FFFF"    // cyan
+    // color: "#FDBD01"    // gold
 };
 
 const player2Config = {
