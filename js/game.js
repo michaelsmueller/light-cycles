@@ -14,7 +14,7 @@ const player2Config = {
 };
 
 class Game {
-    constructor(ctx, canvas) {
+    constructor(ctx, canvas, callback) {
         console.log(`Canvas width ${canvas.width} height ${canvas.height}`);
         this.ctx = ctx;
         this.cellWidth = 10;
@@ -24,6 +24,7 @@ class Game {
         };
         this.player1 = new LightCycle(this.grid, player1Config);
         this.player2 = new LightCycle(this.grid, player2Config);
+        this.gameOver = callback;
     }
 
     _drawJetwall() {
@@ -69,15 +70,29 @@ class Game {
         return lightCycleCrashed;
     }
 
+    _stopPlayers() {
+        this.player1.stop();
+        this.player2.stop();
+    }
+
     _update() {
+        let gameOver = false;
         this._drawJetwall();
         if (this._hasDefeated(this.player1, this.player2)) {
             console.log('player 1 wins');
+            this._stopPlayers();
+            this.gameOver();
+            gameOver = true;
+            window.cancelAnimationFrame(this.interval);
         }
         if (this._hasDefeated(this.player2, this.player1)) {
             console.log('player 2 wins');
+            this._stopPlayers();
+            this.gameOver();
+            gameOver = true;
+            window.cancelAnimationFrame(this.interval);
         }
-        if (!!game.interval) {
+        if (!!this.interval && !gameOver) {
             this.interval = window.requestAnimationFrame(this._update.bind(this));
         }
     }

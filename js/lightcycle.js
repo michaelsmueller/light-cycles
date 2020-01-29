@@ -68,6 +68,10 @@ class LightCycle {
     }
 
     move() {
-        this.intervalId = setInterval(this._moveForward.bind(this), 100);
+      this.intervalId = setInterval(this._moveForward.bind(this), 100);
+    }
+
+    stop() {
+      clearInterval(this.intervalId);
     }
 }

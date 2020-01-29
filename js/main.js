@@ -13,7 +13,7 @@ function gameOver() {
 
 function start() {
     console.log('Instantiating game');
-    game = new Game(ctx, canvas);
+    game = new Game(ctx, canvas, gameOver);
     game.start();
 }
 
