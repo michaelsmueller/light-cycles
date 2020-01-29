@@ -4,15 +4,17 @@ const player1Config = {
     startingRow: 1,
     startingColumn: 1,
     startingDirection: "right",
+    speed: 100,         // lower is faster
     color: "#00FFFF"    // cyan
-    // color: "#FDBD01"    // gold
 };
 
 const player2Config = {
     startingRow: 50,
     startingColumn: 50,
     startingDirection: "left",
+    speed: 100,         // lower is faster
     color: "#FF0080"    // fuchsia
+    // color: "#FDBD01"    // gold
 };
 
 class Game {
@@ -118,6 +120,9 @@ class Game {
                 case 40: // down arrow
                     this.player1.goDown();
                     break;
+                case 190: // period
+                    this.player1.speedUp();
+                    break;
             }
             switch (e.keyCode) {
                 case 65: // a
@@ -132,11 +137,22 @@ class Game {
                 case 83: // s
                     this.player2.goDown();
                     break;
-                case 81: // q
-                    this.player2.accelerate();
+                case 49: // 1
+                    this.player2.speedUp();
                     break;
             }
-        });   
+        });
+        document.addEventListener("keyup", e => {
+            console.log(`Keyup ${e.keyCode} ${e.key}`);
+            switch (e.keyCode) {
+                case 190: // period
+                    this.player1.slowDown();
+                    break;
+                case 49: // 1
+                    this.player2.slowDown();
+                    break;
+            }
+        });
     }
 
     clearGrid() {

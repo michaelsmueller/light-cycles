@@ -9,8 +9,8 @@ class LightCycle {
       this.startingColumn = playerConfig.startingColumn;
       this.direction = playerConfig.startingDirection;
       this.jetwall = [ { row: this.startingRow, column: this.startingColumn } ];
-      this.jetwall = [...this.jetwall];
-      this.velocity = 100;
+      this.baseSpeed = playerConfig.speed;
+      this.speed = playerConfig.speed;
       this.intervalId = undefined;
     }
 
@@ -69,25 +69,22 @@ class LightCycle {
     }
 
     move() {
-      // this.intervalId = setInterval(this._moveForward.bind(this), this.velocity);
-      let counter = 1;
       const repeatSetTimout = function () {
-        // console.log(`Counter is ${counter}`);
-        counter += 1;
         this._moveForward();
-        this.timeoutId = setTimeout(repeatSetTimout.bind(this), this.velocity);
+        this.timeoutId = setTimeout(repeatSetTimout.bind(this), this.speed);
       };
-      this.timeoutId = setTimeout(repeatSetTimout.bind(this), this.velocity);
+      this.timeoutId = setTimeout(repeatSetTimout.bind(this), this.speed);
     }
 
-    accelerate() {
-      console.log("Accelerating");
-      // clearInterval(this.intervalId);
-      this.velocity = 50;
-      // this.intervalId = setInterval(this._moveForward.bind(this), this.velocity);
+    speedUp() {
+      this.speed = this.baseSpeed - 50;
+    }
+
+    slowDown() {
+      this.speed = this.baseSpeed;
     }
 
     stop() {
-      clearInterval(this.intervalId);
+      clearTimeout(this.timeoutId);
     }
 }
