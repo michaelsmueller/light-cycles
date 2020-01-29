@@ -10,6 +10,7 @@ class LightCycle {
       this.direction = playerConfig.startingDirection;
       this.jetwall = [ { row: this.startingRow, column: this.startingColumn } ];
       this.jetwall = [...this.jetwall];
+      this.velocity = 100;
       this.intervalId = undefined;
     }
 
@@ -68,8 +69,15 @@ class LightCycle {
     }
 
     move() {
-      this.intervalId = setInterval(this._moveForward.bind(this), 100);
+      this.intervalId = setInterval(this._moveForward.bind(this), this.velocity);
     }
+
+    // accelerate() {
+    //   console.log("Accelerating");
+    //   clearInterval(this.intervalId);
+    //   this.velocity = 50;
+    //   this.intervalId = setInterval(this._moveForward.bind(this), this.velocity);
+    // }
 
     stop() {
       clearInterval(this.intervalId);

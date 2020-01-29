@@ -8,7 +8,7 @@ ctx = canvas.getContext('2d');
 
 function gameOver() {
     console.log("Game over");
-    canvas.style = "display: none";
+    // canvas.style = "display: none";
 }
 
 function start() {
