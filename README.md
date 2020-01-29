@@ -11,6 +11,15 @@ Extras:
 
 * * *
 
+## To run
+
+For audio to load, use local HTTP server, e.g.
+````
+npm install -g http-server
+http-server -c-1
+http://localhost:8080/
+````
+
 ## MVP
 
 ### Technique

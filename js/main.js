@@ -1,6 +1,6 @@
 // jshint esversion: 6
 
-let ctx, game, audioContext, bufferLoader;
+let ctx, game, audioCtx, bufferLoader;
 let canvas = document.getElementById('game-grid');
 canvas.width = 900;
 canvas.height = 700;
@@ -14,26 +14,24 @@ function gameOver() {
 
 function startAudio() {
     document.AudioContext = document.AudioContext || document.webkitAudioContext;
-    audioContext = new AudioContext();
+    audioCtx = new AudioContext();
     console.log('Audio context started');
-}
 
-function bufferAudio() {
     bufferLoader = new BufferLoader(
-        audioContext,
+        audioCtx,
         [
-            "audio/the-grid.mp3"
-            // Daft Punk - The Grid (Joseph Darwed Orchestral Rework) [Tron Soundtrack] [HD 1080p]
+            // "audio/soopertrack.mp3",  // Extrawelt - Soopertrack Original (High Quality)
+            "audio/the-grid.mp3" // Daft Punk - The Grid (Joseph Darwed Orchestral Rework) [Tron Soundtrack] [HD 1080p]
         ],
-        playAudio
+        playMusic
         );
     bufferLoader.load();
 }
 
-function playAudio(bufferList) {
-    let music = audioContext.createBufferSource();
+function playMusic(bufferList) {
+    const music = audioCtx.createBufferSource();
     music.buffer = bufferList[0];
-    music.connect(audioContext.destination);
+    music.connect(audioCtx.destination);
     music.start(0);
 }
 
@@ -48,7 +46,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('start').onclick = () => {
         console.log('Start game button clicked');
         startAudio();
-        bufferAudio();
         start();
     };
 });

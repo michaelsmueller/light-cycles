@@ -1,4 +1,5 @@
 // jshint esversion: 6
+// code from https://stackoverflow.com/questions/17333777/uncaught-reference-error-bufferloader-is-not-defined
 
 function BufferLoader(context, urlList, callback) {
     this.context = context;
