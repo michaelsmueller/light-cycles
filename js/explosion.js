@@ -6,17 +6,17 @@ const EXPLOSION_BRIGHTNESS_MIN = 50;
 // Maximum explosion brightness.
 const EXPLOSION_BRIGHTNESS_MAX = 70;
 // Base speed of explosions.
-const EXPLOSION_SPEED = 5;
+const EXPLOSION_SPEED = 3;
 // Base length of explosion trails.
-const EXPLOSION_TRAIL_LENGTH = 3;
+const EXPLOSION_TRAIL_LENGTH = 1;
 // Determine if target position indicator is enabled.
-const EXPLOSION_TARGET_INDICATOR_ENABLED = true;
+const EXPLOSION_TARGET_INDICATOR_ENABLED = false;
 // Minimum particle brightness.
 const PARTICLE_BRIGHTNESS_MIN = 50;
 // Maximum particle brightness.
-const PARTICLE_BRIGHTNESS_MAX = 80;
+const PARTICLE_BRIGHTNESS_MAX = 50;
 // Base particle count per explosion.
-const PARTICLE_COUNT = 80;
+const PARTICLE_COUNT = 10;
 // Minimum particle decay rate.
 const PARTICLE_DECAY_MIN = 0.015;
 // Maximum particle decay rate.
@@ -43,7 +43,7 @@ const CANVAS_CLEANUP_ALPHA = 0.3;
 // Hue change per loop, used to rotate through different explosion colors.
 const HUE_STEP_INCREASE = 0.5;
 // Minimum number of ticks per manual explosion launch.
-const TICKS_PER_EXPLOSION_MIN = 5;
+const TICKS_PER_EXPLOSION_MIN = 1;
 // Minimum number of ticks between each automatic explosion launch.
 const TICKS_PER_EXPLOSION_AUTOMATED_MIN = 20;
 // Maximum number of ticks between each automatic explosion launch.
@@ -55,7 +55,7 @@ window.requestAnimFrame = (() => {
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame ||
             function(callback) {
-                window.setTimeout(callback, 1000 / 60);
+                window.setTimeout(callback, 2000 / 60);
             };
 })();
 
@@ -101,25 +101,14 @@ function Explosion (startX, startY, endX, endY) {
     // Set the brightness.
     this.brightness = random(EXPLOSION_BRIGHTNESS_MIN, EXPLOSION_BRIGHTNESS_MAX);
     // Set the radius of click-target location.
-    this.targetRadius = 2.5;
+    this.targetRadius = 1;
 }
-
-
 
 Explosion.prototype.update = function(index) {
     // Remove the oldest trail particle.
     this.trail.pop();
     // Add the current position to the start of trail.
     this.trail.unshift([this.x, this.y]);
-
-    // Animate the target radius indicator.
-    if (EXPLOSION_TARGET_INDICATOR_ENABLED) {
-        if(this.targetRadius < 8) {
-            this.targetRadius += 0.3;
-        } else {
-            this.targetRadius = 1;
-        }
-    }
 
     // Increase speed based on acceleration rate.
     this.speed *= this.acceleration;
@@ -145,8 +134,6 @@ Explosion.prototype.update = function(index) {
     }
 };
 
-
-
 // Draw a explosion.
 // Use CanvasRenderingContext2D methods to create strokes as explosion paths. 
 Explosion.prototype.draw = function() {
@@ -163,17 +150,7 @@ Explosion.prototype.draw = function() {
     ctx.strokeStyle = `hsl(${hue}, 100%, ${this.brightness}%)`;
     // Draw stroke.
     ctx.stroke();
-
-    if (EXPLOSION_TARGET_INDICATOR_ENABLED) {
-        // Begin a new path for end position animation.
-        ctx.beginPath();
-        // Create an pulsing circle at the end point with targetRadius.
-        ctx.arc(this.endX, this.endY, this.targetRadius, 0, Math.PI * 2);
-        // Draw stroke.
-        ctx.stroke();
-    }
 };
-
 
 // Creates a new particle at provided 'x' and 'y' coordinates.
 function Particle(x, y) {
@@ -247,9 +224,6 @@ Particle.prototype.draw = function() {
     ctx.stroke();
 };
 
-// === END PROTOTYPING ===
-
-
 // Create particle explosion at 'x' and 'y' coordinates.
 function createParticles(x, y) {
     // Set particle count.
@@ -262,12 +236,12 @@ function createParticles(x, y) {
 }
 
 // Launch explosions automatically.
-function launchExplosion() {
-    let startX = 0;
-    let startY = 0;
+function launchExplosion(position) {
+    let startX = position.x;
+    let startY = position.y;
     // Set end position to random position, somewhere in the top half of screen.
-    let endX = 400;
-    let endY = 400;
+    let endX = position.x;
+    let endY = position.y;
     // Create new explosion and add to collection.
     explosions.push(new Explosion(startX, startY, endX, endY));
 }

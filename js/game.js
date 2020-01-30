@@ -11,11 +11,13 @@ const player1Config = {
 const player2Config = {
     startingRow: 50,
     startingColumn: 50,
-    startingDirection: "left",
+    startingDirection: "up",
     speed: 100,         // lower is faster
     color: "#FF0080"    // fuchsia
     // color: "#FDBD01"    // gold
 };
+
+let crashPosition = {};
 
 class Game {
     constructor(ctx, canvas, callback) {
@@ -79,21 +81,34 @@ class Game {
         this.player2.stop();
     }
 
+    _getCrashPosition(lightCycle) {
+        return {
+            x: lightCycle.jetwall[0].column * this.cellWidth,
+            y: lightCycle.jetwall[0].row * this.cellWidth
+        };
+    }
+
     _update() {
         let gameOver = false;
         this._drawJetwall();
         if (this._hasDefeated(this.player1, this.player2)) {
-            console.log('player 1 wins');
+            console.log('PLAYER 1 WINS');
+            crashPosition = this._getCrashPosition(this.player2);
             this._stopPlayers();
             this.gameOver();
+            this.explosionLoop(crashPosition);
             gameOver = true;
+            // need to stop music
             window.cancelAnimationFrame(this.interval);
         }
         if (this._hasDefeated(this.player2, this.player1)) {
-            console.log('player 2 wins');
+            console.log('PLAYER 2 WINS');
+            crashPosition = this._getCrashPosition(this.player1);
             this._stopPlayers();
             this.gameOver();
+            this.explosionLoop(crashPosition);
             gameOver = true;
+            // need to stop music
             window.cancelAnimationFrame(this.interval);
         }
         if (!!this.interval && !gameOver) {
@@ -159,7 +174,7 @@ class Game {
         this.ctx.clearRect(0, 0, 1000, 1000);
     }
 
-    explosionLoop() {
+    explosionLoop(crashPosition) {
         requestAnimFrame(this.explosionLoop.bind(this));
 
         // Adjusts coloration of fireworks over time.
@@ -172,16 +187,13 @@ class Game {
         updateParticles();
     
         // Launch automated fireworks.
-        launchExplosion();
+        launchExplosion(crashPosition);
     }
 
     start() {
         this.clearGrid();
         this.player1.move();
         this.player2.move();
-
-        this.explosionLoop();
-
         this.interval = window.requestAnimationFrame(this._update.bind(this));
         this._assignControlsToKeys();
     }
