@@ -1,6 +1,8 @@
 // jshint esversion: 6
 
 let ctx, game, audioCtx, bufferLoader;
+let explosions = [], particles = [];
+let hue = 120;
 let canvas = document.getElementById('game-grid');
 canvas.width = 900;
 canvas.height = 700;

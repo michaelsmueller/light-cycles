@@ -159,10 +159,29 @@ class Game {
         this.ctx.clearRect(0, 0, 1000, 1000);
     }
 
+    explosionLoop() {
+        requestAnimFrame(this.explosionLoop.bind(this));
+
+        // Adjusts coloration of fireworks over time.
+        hue += HUE_STEP_INCREASE;
+    
+        // Update fireworks.
+        updateExplosions();
+    
+        // Update particles.
+        updateParticles();
+    
+        // Launch automated fireworks.
+        launchExplosion();
+    }
+
     start() {
         this.clearGrid();
         this.player1.move();
         this.player2.move();
+
+        this.explosionLoop();
+
         this.interval = window.requestAnimationFrame(this._update.bind(this));
         this._assignControlsToKeys();
     }
