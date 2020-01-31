@@ -30,6 +30,7 @@ class Game {
         };
         this.player1 = new LightCycle(this.grid, player1Config);
         this.player2 = new LightCycle(this.grid, player2Config);
+        this.winner = "";
         this.gameOver = callback;
     }
 
@@ -88,28 +89,28 @@ class Game {
         };
     }
 
+    _endingSequence(winner, loser) {
+        console.log(`${this.winner} wins!`);
+        crashPosition = this._getCrashPosition(loser);
+        this._stopPlayers();
+        this.gameOver();
+        this.explosionLoop(crashPosition);
+        // need to stop music
+        window.cancelAnimationFrame(this.interval);
+    }
+
     _update() {
         let gameOver = false;
         this._drawJetwall();
         if (this._hasDefeated(this.player1, this.player2)) {
-            console.log('PLAYER 1 WINS');
-            crashPosition = this._getCrashPosition(this.player2);
-            this._stopPlayers();
-            this.gameOver();
-            this.explosionLoop(crashPosition);
+            this.winner = "Player 1";
+            this._endingSequence(this.player1, this.player2);
             gameOver = true;
-            // need to stop music
-            window.cancelAnimationFrame(this.interval);
         }
         if (this._hasDefeated(this.player2, this.player1)) {
-            console.log('PLAYER 2 WINS');
-            crashPosition = this._getCrashPosition(this.player1);
-            this._stopPlayers();
-            this.gameOver();
-            this.explosionLoop(crashPosition);
+            this.winner = "Player 2";
+            this._endingSequence(this.player2, this.player1);
             gameOver = true;
-            // need to stop music
-            window.cancelAnimationFrame(this.interval);
         }
         if (!!this.interval && !gameOver) {
             this.interval = window.requestAnimationFrame(this._update.bind(this));
