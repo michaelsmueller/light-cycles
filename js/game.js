@@ -83,8 +83,8 @@ class Game {
 
     _getCrashPosition(lightCycle) {
         return {
-            x: lightCycle.jetwall[0].column * this.cellWidth,
-            y: lightCycle.jetwall[0].row * this.cellWidth
+            x: lightCycle.jetwall[0].column * this.cellWidth + this.cellWidth / 2,
+            y: lightCycle.jetwall[0].row * this.cellWidth + this.cellWidth / 2
         };
     }
 
@@ -176,17 +176,8 @@ class Game {
 
     explosionLoop(crashPosition) {
         requestAnimFrame(this.explosionLoop.bind(this));
-
-        // Adjusts coloration of fireworks over time.
-        hue += HUE_STEP_INCREASE;
-    
-        // Update fireworks.
         updateExplosions();
-    
-        // Update particles.
         updateParticles();
-    
-        // Launch automated fireworks.
         launchExplosion(crashPosition);
     }
 
