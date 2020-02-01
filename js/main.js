@@ -2,21 +2,16 @@
 
 let ctx, game, audioCtx, bufferLoader, music, cycleSound;
 let explosions = [], particles = [];
-let canvas = document.getElementById('game-grid');
-canvas.width = 900;
-canvas.height = 700;
+let html = document.documentElement;
+let canvas = document.getElementById("game-grid");
+
+// let canvas = document.getElementById('game-grid');
+// canvas.width = 900;
+// canvas.height = 700;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 ctx = canvas.getContext('2d');
-
-
-function gameOver(winner) {
-    stopMusic();
-    if (winner === "neither") {
-        console.log("Both players have derezzed.");
-    } else {
-        console.log(`${winner} has won.`);
-    }
-}
-
+  
 function startAudio() {
     document.AudioContext = document.AudioContext || document.webkitAudioContext;
     audioCtx = new AudioContext();
@@ -34,6 +29,9 @@ function startAudio() {
 }
 
 function playMusic(bufferList) {
+    if (music) {
+        stopMusic();
+    }
     music = audioCtx.createBufferSource();
     music.buffer = bufferList[0];
     console.log(music);
@@ -58,10 +56,20 @@ function start() {
     game.start();
 }
 
+function gameOver(winner) {
+    stopMusic();
+    if (winner === "neither") {
+        console.log("Both players have derezzed.");
+    } else {
+        console.log(`${winner} has won.`);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM content loaded');
     document.getElementById('start').onclick = () => {
         console.log('Start game button clicked');
+        html.requestFullscreen();
         startAudio();
         startCycleAudio();
         start();
