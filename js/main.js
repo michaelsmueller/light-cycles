@@ -8,10 +8,13 @@ canvas.height = 700;
 ctx = canvas.getContext('2d');
 
 
-function gameOver() {
+function gameOver(winner) {
     stopMusic();
-    console.log("Game over");
-    // add something cool here
+    if (winner === "neither") {
+        console.log("Both players have derezzed.");
+    } else {
+        console.log(`${winner} has won.`);
+    }
 }
 
 function startAudio() {

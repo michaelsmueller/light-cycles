@@ -11,7 +11,7 @@ const player1Config = {
 const player2Config = {
     startingRow: 50,
     startingColumn: 50,
-    startingDirection: "right",
+    startingDirection: "left",
     speed: 100,         // lower is faster
     color: "#FF0080"    // fuchsia
     // color: "#FDBD01"    // gold
@@ -30,8 +30,8 @@ class Game {
         };
         this.player1 = new LightCycle(this.grid, player1Config);
         this.player2 = new LightCycle(this.grid, player2Config);
-        this.winner = "";
         this.gameOver = callback;
+        this.winner = "";
     }
 
     _drawJetwall() {
@@ -95,24 +95,20 @@ class Game {
 
     _endingSequence() {
         this._stopPlayers();
-
         if (this.player1.crashed && this.player2.crashed) {
-            console.log("double crash");
+            this.winner = "neither";
             crashPosition = this._getCrashPosition(this.player1);
             this.explosionLoop(crashPosition);
             crashPosition = this._getCrashPosition(this.player2);
-            this.explosionLoop(crashPosition);
         } else if (this.player1.crashed) {
-            console.log(`Player 2 wins!`);
+            this.winner = "Player 2";
             crashPosition = this._getCrashPosition(this.player1);
-            this.explosionLoop(crashPosition);
         } else {
-            console.log(`Player 1 wins!`);
+            this.winner = "Player 1";
             crashPosition = this._getCrashPosition(this.player2);
-            this.explosionLoop(crashPosition);
         }
-
-        this.gameOver();
+        this.explosionLoop(crashPosition);
+        this.gameOver(this.winner);
         window.cancelAnimationFrame(this.interval);
     }
 
