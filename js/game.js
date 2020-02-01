@@ -11,7 +11,7 @@ const player1Config = {
 const player2Config = {
     startingRow: 50,
     startingColumn: 50,
-    startingDirection: "up",
+    startingDirection: "right",
     speed: 100,         // lower is faster
     color: "#FF0080"    // fuchsia
     // color: "#FDBD01"    // gold
@@ -66,18 +66,18 @@ class Game {
         return crashed;
     }
 
-    _checkCrash(cycle1, cycle2) {
-        if (this._hasCrashedOwnJetwall(cycle1)) {
-            cycle1.crashed = true;
+    _checkCrash() {
+        if (this._hasCrashedOwnJetwall(this.player1)) {
+            this.player1.crashed = true;
         }
-        if (this._hasCrashedOtherJetwall(cycle1, cycle2)) {
-            cycle1.crashed = true;
+        if (this._hasCrashedOtherJetwall(this.player1, this.player2)) {
+            this.player1.crashed = true;
         }
-        if (this._hasCrashedOwnJetwall(cycle2)) {
-            cycle2.crashed = true;
+        if (this._hasCrashedOwnJetwall(this.player2)) {
+            this.player2.crashed = true;
         }
-        if (this._hasCrashedOtherJetwall(cycle2, cycle1)) {
-            cycle2.crashed = true;
+        if (this._hasCrashedOtherJetwall(this.player2, this.player1)) {
+            this.player2.crashed = true;
         }
     }
 
@@ -86,35 +86,42 @@ class Game {
         this.player2.stop();
     }
 
-    _getCrashPosition(lightCycle) {
+    _getCrashPosition(cycle) {
         return {
-            x: lightCycle.jetwall[0].column * this.cellWidth + this.cellWidth / 2,
-            y: lightCycle.jetwall[0].row * this.cellWidth + this.cellWidth / 2
+            x: cycle.jetwall[0].column * this.cellWidth + this.cellWidth / 2,
+            y: cycle.jetwall[0].row * this.cellWidth + this.cellWidth / 2
         };
     }
 
-    _endingSequence(winner, loser) {
-        console.log(`${this.winner} wins!`);
-        crashPosition = this._getCrashPosition(loser);
+    _endingSequence() {
         this._stopPlayers();
+
+        if (this.player1.crashed && this.player2.crashed) {
+            console.log("double crash");
+            crashPosition = this._getCrashPosition(this.player1);
+            this.explosionLoop(crashPosition);
+            crashPosition = this._getCrashPosition(this.player2);
+            this.explosionLoop(crashPosition);
+        } else if (this.player1.crashed) {
+            console.log(`Player 2 wins!`);
+            crashPosition = this._getCrashPosition(this.player1);
+            this.explosionLoop(crashPosition);
+        } else {
+            console.log(`Player 1 wins!`);
+            crashPosition = this._getCrashPosition(this.player2);
+            this.explosionLoop(crashPosition);
+        }
+
         this.gameOver();
-        this.explosionLoop(crashPosition);
-        // need to stop music
         window.cancelAnimationFrame(this.interval);
     }
 
     _update() {
         let gameOver = false;
         this._drawJetwall();
-        this._checkCrash(this.player1, this.player2);
-        if (this.player1.crashed) {
-            this.winner = "Player 2";
-            this._endingSequence(this.player2, this.player1);
-            gameOver = true;
-        }
-        if (this.player2.crashed) {
-            this.winner = "Player 1";
-            this._endingSequence(this.player1, this.player2);
+        this._checkCrash();
+        if (this.player1.crashed || this.player2.crashed) {
+            this._endingSequence();
             gameOver = true;
         }
         if (!!this.interval && !gameOver) {
