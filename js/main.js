@@ -1,6 +1,6 @@
 // jshint esversion: 6
 
-let ctx, game, audioCtx, bufferLoader, music;
+let ctx, game, audioCtx, bufferLoader, music, cycleSound;
 let explosions = [], particles = [];
 let canvas = document.getElementById('game-grid');
 canvas.width = 900;
@@ -45,6 +45,13 @@ function stopMusic() {
     music.stop(0);
 }
 
+function startCycleAudio() {
+    // console.log("Starting cycle audio");
+    // cycleSound = new Audio('audio/cycle-short.mp3');
+    // cycleSound.loop = true;
+    // cycleSound.play();
+}
+
 function start() {
     console.log('Instantiating game');
     game = new Game(ctx, canvas, gameOver);
@@ -56,6 +63,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     document.getElementById('start').onclick = () => {
         console.log('Start game button clicked');
         startAudio();
+        startCycleAudio();
         start();
     };
 });
