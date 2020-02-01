@@ -11,6 +11,7 @@ class LightCycle {
       this.jetwall = [ { row: this.startingRow, column: this.startingColumn } ];
       this.baseSpeed = playerConfig.speed;
       this.speed = playerConfig.speed;
+      this.crashed = false;
       this.intervalId = undefined;
     }
 

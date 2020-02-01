@@ -44,11 +44,11 @@ class Game {
         this.ctx.fillRect(cycle2.column * this.cellWidth, cycle2.row * this.cellWidth, 10, 10);
     }
     
-    _hasCrashedOwnJetwall(lightCycle) {
+    _hasCrashedOwnJetwall(cycle) {
         let crashed = false;
-        lightCycle.jetwall.forEach((position, index) => {
+        cycle.jetwall.forEach((position, index) => {
             if (index != 0) {
-                if (position.row === lightCycle.jetwall[0].row && position.column === lightCycle.jetwall[0].column) {
+                if (position.row === cycle.jetwall[0].row && position.column === cycle.jetwall[0].column) {
                     crashed = true;
                 }
             }
@@ -56,25 +56,29 @@ class Game {
         return crashed;
     }
 
-    _hasCrashedEnemyJetwall(lightCycle, enemyLightCycle) {
+    _hasCrashedOtherJetwall(cycle1, cycle2) {
         let crashed = false;
-        enemyLightCycle.jetwall.forEach((position, index) => {
-            if (position.row === lightCycle.jetwall[0].row && position.column === lightCycle.jetwall[0].column) {
+        cycle2.jetwall.forEach((position, index) => {
+            if (position.row === cycle1.jetwall[0].row && position.column === cycle1.jetwall[0].column) {
                 crashed = true;
             }
         });
         return crashed;
     }
 
-    _hasDefeated(enemyLightCycle, lightCycle) {
-        let lightCycleCrashed = false;
-        if (this._hasCrashedOwnJetwall(lightCycle)) {
-            lightCycleCrashed = true;
+    _checkCrash(cycle1, cycle2) {
+        if (this._hasCrashedOwnJetwall(cycle1)) {
+            cycle1.crashed = true;
         }
-        if (this._hasCrashedEnemyJetwall(lightCycle, enemyLightCycle)) {
-            lightCycleCrashed = true;
+        if (this._hasCrashedOtherJetwall(cycle1, cycle2)) {
+            cycle1.crashed = true;
         }
-        return lightCycleCrashed;
+        if (this._hasCrashedOwnJetwall(cycle2)) {
+            cycle2.crashed = true;
+        }
+        if (this._hasCrashedOtherJetwall(cycle2, cycle1)) {
+            cycle2.crashed = true;
+        }
     }
 
     _stopPlayers() {
@@ -102,14 +106,15 @@ class Game {
     _update() {
         let gameOver = false;
         this._drawJetwall();
-        if (this._hasDefeated(this.player1, this.player2)) {
-            this.winner = "Player 1";
-            this._endingSequence(this.player1, this.player2);
-            gameOver = true;
-        }
-        if (this._hasDefeated(this.player2, this.player1)) {
+        this._checkCrash(this.player1, this.player2);
+        if (this.player1.crashed) {
             this.winner = "Player 2";
             this._endingSequence(this.player2, this.player1);
+            gameOver = true;
+        }
+        if (this.player2.crashed) {
+            this.winner = "Player 1";
+            this._endingSequence(this.player1, this.player2);
             gameOver = true;
         }
         if (!!this.interval && !gameOver) {
