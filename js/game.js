@@ -39,6 +39,7 @@ class Game {
         this.player1.reset(player1Config);
         this.player2.reset(player2Config);
         this.winner = "";
+        this.stopAnimation();
     }
 
     _drawJetwall() {
@@ -115,8 +116,8 @@ class Game {
             crashPosition = this._getCrashPosition(this.player2);
         }
         this.explosionLoop(crashPosition);
+        this.stopAnimation()
         this.gameOver(this.winner);
-        window.cancelAnimationFrame(this.interval);
     }
 
     _update() {
@@ -195,6 +196,10 @@ class Game {
         updateExplosions();
         updateParticles();
         launchExplosion(crashPosition);
+    }
+
+    stopAnimation() {
+        window.cancelAnimationFrame(this.interval);
     }
 
     start() {

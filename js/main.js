@@ -18,7 +18,9 @@ function setupCanvas() {
 
 function startAudio() {
     document.AudioContext = document.AudioContext || document.webkitAudioContext;
-    audioCtx = new AudioContext();
+    if (!audioCtx) {
+        audioCtx = new AudioContext();
+    }
     console.log('Audio context started');
 
     bufferLoader = new BufferLoader(
