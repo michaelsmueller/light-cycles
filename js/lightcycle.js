@@ -5,11 +5,15 @@ class LightCycle {
       console.log(`maxRows ${grid.maxRows} maxColumns ${grid.maxColumns}`);
       this.maxRows = grid.maxRows;
       this.maxColumns = grid.maxColumns;
+      this.setInitialConfig(playerConfig);
+    }
+
+    setInitialConfig(playerConfig) {
       this.startingRow = playerConfig.startingRow;
       this.startingColumn = playerConfig.startingColumn;
       this.direction = playerConfig.startingDirection;
-      this.startingJetwall = [ { row: this.startingRow, column: this.startingColumn } ];
-      this.jetwall = [...this.startingJetwall];
+      this.initialJetwall = [ { row: this.startingRow, column: this.startingColumn } ];
+      this.jetwall = [...this.initialJetwall];
       this.baseSpeed = playerConfig.speed;
       this.speed = playerConfig.speed;
       this.crashed = false;
@@ -17,15 +21,7 @@ class LightCycle {
     }
 
     reset(playerConfig) {
-      this.startingRow = playerConfig.startingRow;
-      this.startingColumn = playerConfig.startingColumn;
-      this.direction = playerConfig.startingDirection;
-      this.startingJetwall = [ { row: this.startingRow, column: this.startingColumn } ];
-      this.jetwall = [...this.startingJetwall];
-      this.baseSpeed = playerConfig.speed;
-      this.speed = playerConfig.speed;
-      this.crashed = false;
-      this.intervalId = undefined;
+      this.setInitialConfig(playerConfig);
     }
 
     _moveForward() {

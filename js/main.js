@@ -4,15 +4,11 @@ let ctx, game, canvas, audioCtx, bufferLoader, music, cycleSound;
 let explosions = [], particles = [];
 let html = document.documentElement;
 
-// let canvas = document.getElementById('game-grid');
-// canvas.width = 900;
-// canvas.height = 700;
-
 function setupCanvas() {
     canvas = document.getElementById("game-grid");
     canvas.classList.toggle("hidden", false);
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = 1350;
+    canvas.height = 850;
     ctx = canvas.getContext('2d');
 }
 
@@ -80,8 +76,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const startButton = document.getElementById('start');
     startButton.onclick = () => {
         console.log('Start game button clicked');
-        // startButton.classList.toggle("hidden");
-        // html.requestFullscreen();
+        startButton.classList.toggle("hidden");
+        html.requestFullscreen();
         setupCanvas();
         startAudio();
         startCycleAudio();
