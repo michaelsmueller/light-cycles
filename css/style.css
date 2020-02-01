@@ -2,10 +2,18 @@ body {
     background-color: #000;
 }
 
+#container {
+    height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #start {
-    width: 100px;
-    height: 40px;
-    font-size: 12px;
+    width: 200px;
+    height: 80px;
+    font-size: 24px;
+    font-family: Courier, monospae;
     color: white;
     background-color: gray;
     padding: 10px;
