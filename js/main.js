@@ -1,8 +1,7 @@
 // jshint esversion: 6
 
-let ctx, game, audioCtx, bufferLoader;
+let ctx, game, audioCtx, bufferLoader, music;
 let explosions = [], particles = [];
-let hue = 120;
 let canvas = document.getElementById('game-grid');
 canvas.width = 900;
 canvas.height = 700;
@@ -10,6 +9,7 @@ ctx = canvas.getContext('2d');
 
 
 function gameOver() {
+    stopMusic();
     console.log("Game over");
     // add something cool here
 }
@@ -31,10 +31,15 @@ function startAudio() {
 }
 
 function playMusic(bufferList) {
-    const music = audioCtx.createBufferSource();
+    music = audioCtx.createBufferSource();
     music.buffer = bufferList[0];
+    console.log(music);
     music.connect(audioCtx.destination);
     music.start(0);
+}
+
+function stopMusic() {
+    music.stop(0);
 }
 
 function start() {

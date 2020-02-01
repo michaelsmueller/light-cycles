@@ -1,14 +1,14 @@
 // jshint esversion: 6
 
 const EXPLOSION_COLOR = "white";
-const EXPLOSION_SPEED = 3;
-const EXPLOSION_TRAIL_LENGTH = 10;
+const EXPLOSION_SPEED = 10;
+const EXPLOSION_TRAIL_LENGTH = 1;
 const PARTICLE_COLOR = "white";
-const PARTICLE_COUNT = 30;
+const PARTICLE_COUNT = 50;
 const PARTICLE_DECAY = 0.015;
-const PARTICLE_FRICTION = 0.9;   // size of explosion
-const PARTICLE_SPEED = 10;
-const PARTICLE_TRAIL_LENGTH = 20;
+const PARTICLE_FRICTION = 1;   // size of explosion
+const PARTICLE_SPEED = 30;
+const PARTICLE_TRAIL_LENGTH = 1;
 
 window.requestAnimFrame = (() => {
     return  window.requestAnimationFrame ||
@@ -17,7 +17,8 @@ window.requestAnimFrame = (() => {
             function(callback) {
                 window.setTimeout(callback, 1000 / 60);
             };
-})();
+    })
+();
 
 function random(min, max) {
     return Math.random() * (max - min) + min;
@@ -32,8 +33,8 @@ function calculateDistance(aX, aY, bX, bY) {
 function Explosion (startX, startY, endX, endY) {
     this.x = startX;
     this.y = startY;
-    this.startX = startX;
-    this.startY = startY;
+    this.startX = 0;
+    this.startY = 0;
     this.endX = endX;
     this.endY = endY;
     this.distanceToEnd = calculateDistance(startX, startY, endX, endY);
