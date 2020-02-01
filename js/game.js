@@ -34,6 +34,13 @@ class Game {
         this.winner = "";
     }
 
+    reset() {
+        this._stopPlayers();
+        this.player1.reset(player1Config);
+        this.player2.reset(player2Config);
+        this.winner = "";
+    }
+
     _drawJetwall() {
         this.ctx.fillStyle = player1Config.color;
         const cycle1 = game.player1.jetwall[0];

@@ -8,7 +8,19 @@ class LightCycle {
       this.startingRow = playerConfig.startingRow;
       this.startingColumn = playerConfig.startingColumn;
       this.direction = playerConfig.startingDirection;
-      this.jetwall = [ { row: this.startingRow, column: this.startingColumn } ];
+      this.startingJetwall = [ { row: this.startingRow, column: this.startingColumn } ];
+      this.jetwall = [...this.startingJetwall];
+      this.baseSpeed = playerConfig.speed;
+      this.speed = playerConfig.speed;
+      this.crashed = false;
+      this.intervalId = undefined;
+    }
+
+    reset(playerConfig) {
+      this.startingRow = playerConfig.startingRow;
+      this.startingColumn = playerConfig.startingColumn;
+      this.direction = playerConfig.startingDirection;
+      this.jetwall = [...this.startingJetwall];
       this.baseSpeed = playerConfig.speed;
       this.speed = playerConfig.speed;
       this.crashed = false;

@@ -1,17 +1,21 @@
 // jshint esversion: 6
 
-let ctx, game, audioCtx, bufferLoader, music, cycleSound;
+let ctx, game, canvas, audioCtx, bufferLoader, music, cycleSound;
 let explosions = [], particles = [];
 let html = document.documentElement;
-let canvas = document.getElementById("game-grid");
 
 // let canvas = document.getElementById('game-grid');
 // canvas.width = 900;
 // canvas.height = 700;
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-ctx = canvas.getContext('2d');
-  
+
+function setupCanvas() {
+    canvas = document.getElementById("game-grid");
+    canvas.classList.toggle("hidden", false);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    ctx = canvas.getContext('2d');
+}
+
 function startAudio() {
     document.AudioContext = document.AudioContext || document.webkitAudioContext;
     audioCtx = new AudioContext();
@@ -52,7 +56,11 @@ function startCycleAudio() {
 
 function start() {
     console.log('Instantiating game');
-    game = new Game(ctx, canvas, gameOver);
+    if (game) {
+        game.reset();
+    } else {
+        game = new Game(ctx, canvas, gameOver);
+    }
     game.start();
 }
 
@@ -67,9 +75,12 @@ function gameOver(winner) {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM content loaded');
-    document.getElementById('start').onclick = () => {
+    const startButton = document.getElementById('start');
+    startButton.onclick = () => {
         console.log('Start game button clicked');
-        html.requestFullscreen();
+        // startButton.classList.toggle("hidden");
+        // html.requestFullscreen();
+        setupCanvas();
         startAudio();
         startCycleAudio();
         start();
