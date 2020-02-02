@@ -7,9 +7,14 @@ let html = document.documentElement;
 function setupCanvas() {
     canvas = document.getElementById("game-grid");
     canvas.classList.toggle("hidden", false);
-    canvas.width = 1350;
-    canvas.height = 810;
+    canvas.width = 1410;
+    canvas.height = 780;
     ctx = canvas.getContext('2d');
+}
+
+function setupScore() {
+    score = document.getElementById("score");
+    score.classList.toggle("hidden");
 }
 
 function startAudio() {
@@ -111,6 +116,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         html.requestFullscreen();
         // hideScrollBars();
         setupCanvas();
+        setupScore();
         // startCycleAudio();
         start();
     };

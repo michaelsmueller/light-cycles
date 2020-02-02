@@ -15,8 +15,9 @@ body {
     width: 100%;
     height: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 #start-screen {
@@ -86,7 +87,7 @@ body {
     justify-content: space-evenly;
 }
 
-#player-1 {
+#player-1-controls {
     width: 450px;
     height: 300px;
     background-image: url("../img/player-1-controls-450.png");
@@ -95,7 +96,7 @@ body {
     background-position:center;
 }
 
-#player-2 {
+#player-2-controls {
     width: 450px;
     height: 300px;
     background-image: url("../img/player-2-controls-450.png");
@@ -108,13 +109,23 @@ body {
     position: relative;
 }
 
+#score {
+    color: gray;
+    font-size: 24px;
+    font-family: Courier, monospace;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
 #game-over-screen {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
     z-index: 10;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -130,6 +141,7 @@ body {
 }
 
 #game-grid {
+    margin-top: 20px;
     border: 1px dotted gray;
 }
 
