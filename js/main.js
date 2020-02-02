@@ -46,10 +46,10 @@ function stopMusic() {
 }
 
 function startCycleAudio() {
-    // console.log("Starting cycle audio");
-    // cycleSound = new Audio('audio/cycle-short.mp3');
-    // cycleSound.loop = true;
-    // cycleSound.play();
+    console.log("Starting cycle audio");
+    cycleSound = new Audio('audio/cycle-short.mp3');
+    cycleSound.loop = true;
+    cycleSound.play();
 }
 
 function start() {
@@ -77,10 +77,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     startButton.onclick = () => {
         console.log('Start game button clicked');
         startButton.classList.toggle("hidden");
-        html.requestFullscreen();
+        // html.requestFullscreen();
         setupCanvas();
         startAudio();
-        startCycleAudio();
+        // startCycleAudio();
         start();
     };
 });
