@@ -70,12 +70,17 @@ function gameOver(winner) {
     }
 }
 
+function hideStartScreen() {
+    const startScreen = document.getElementById('start-screen');
+    startScreen.classList.toggle("hidden");
+}
+
 document.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM content loaded');
     const startButton = document.getElementById('start');
     startButton.onclick = () => {
         console.log('Start game button clicked');
-        startButton.classList.toggle("hidden");
+        hideStartScreen();
         // html.requestFullscreen();
         setupCanvas();
         startAudio();
