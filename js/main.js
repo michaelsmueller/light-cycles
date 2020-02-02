@@ -63,17 +63,35 @@ function start() {
 
 function gameOver(winner) {
     stopMusic();
+
+
+    const gameOverScreen = document.getElementById('game-over-screen');
+    gameOverScreen.classList.toggle("hidden");
+
+    const winnerMessage = document.getElementById('winner-message');
     if (winner === "neither") {
-        alert("Both players have derezzed.");
+        winnerMessage.innerText = "Both players have derezzed";
     } else {
-        alert(`${winner} has won.`);
+        winnerMessage.innerText = `${winner} has won.`;
     }
+
+    const restartButton = document.getElementById('restart');
+    restartButton.onclick = () => {
+        console.log('Restart game button clicked');
+        gameOverScreen.classList.toggle("hidden");
+        start();
+    };
 }
 
 function hideStartScreen() {
     const startScreen = document.getElementById('start-screen');
     startScreen.classList.toggle("hidden");
 }
+
+// function hideScrollBars() {
+//     document.documentElement.style.overflow = "hidden";
+//     // document.documentElement.style.overflow = 'auto';    // to put them back
+// }
 
 document.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM content loaded');
@@ -82,7 +100,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     startButton.onclick = () => {
         console.log('Start game button clicked');
         hideStartScreen();
-        // html.requestFullscreen();
+        html.requestFullscreen();
+        // hideScrollBars();
         setupCanvas();
         // startCycleAudio();
         start();

@@ -46,13 +46,14 @@ body {
     padding-top: 300px;
 }
 
-#start button {
+#start button,
+#restart button {
     width: 160px;
     height: 60px;
     font-size: 24px;
     font-family: Courier, monospace;
     color: white;
-    background-color: transparent;
+    background-color: black;
     border: 2px solid white;
     outline:none;
 }
@@ -62,7 +63,17 @@ body {
     color: black;
 }
 
+#restart button:hover {
+    background-color: white;
+    color: black;
+}
+
 #start button:active {
+    background-color: white;
+    color: gray;
+}
+
+#restart button:active {
     background-color: white;
     color: gray;
 }
@@ -91,6 +102,30 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-position:center;
+}
+
+#game {
+    position: relative;
+}
+
+#game-over-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#winner-message {
+    height: 100px;
+    font-size: 24px;
+    font-family: Courier, monospace;
+    color: white;
 }
 
 #game-grid {

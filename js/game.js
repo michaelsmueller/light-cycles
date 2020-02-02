@@ -116,7 +116,7 @@ class Game {
         }
         this.explosionLoop(crashPosition);
         this.stopAnimation();
-        setTimeout(() => this.gameOver(this.winner), 1000);
+        setTimeout(() => this.gameOver(this.winner), 1);
     }
 
     _update() {
@@ -188,6 +188,7 @@ class Game {
 
     clearGrid() {
         this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        this.ctx.beginPath();
     }
 
     explosionLoop(crashPosition) {
