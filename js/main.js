@@ -22,7 +22,6 @@ function startAudio() {
     bufferLoader = new BufferLoader(
         audioCtx,
         [
-            // "audio/soopertrack.mp3",  // Extrawelt - Soopertrack Original (High Quality)
             "audio/the-grid.mp3" // Daft Punk - The Grid (Joseph Darwed Orchestral Rework) [Tron Soundtrack] [HD 1080p]
         ],
         playMusic

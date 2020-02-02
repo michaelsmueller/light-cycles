@@ -9,12 +9,11 @@ const player1Config = {
 };
 
 const player2Config = {
-    startingRow: 50,
-    startingColumn: 50,
+    startingRow: 70,
+    startingColumn: 100,
     startingDirection: "left",
     speed: 100,         // lower is faster
     color: "#FF0080"    // fuchsia
-    // color: "#FDBD01"    // gold
 };
 
 let crashPosition = {};
@@ -116,7 +115,7 @@ class Game {
             crashPosition = this._getCrashPosition(this.player2);
         }
         this.explosionLoop(crashPosition);
-        this.stopAnimation()
+        this.stopAnimation();
         this.gameOver(this.winner);
     }
 
