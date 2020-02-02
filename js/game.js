@@ -9,8 +9,8 @@ const player1Config = {
 };
 
 const player2Config = {
-    startingRow: 70,
-    startingColumn: 100,
+    startingRow: 50,
+    startingColumn: 80,
     startingDirection: "left",
     speed: 100,         // lower is faster
     color: "#FF0080"    // fuchsia
@@ -22,7 +22,7 @@ class Game {
     constructor(ctx, canvas, callback) {
         console.log(`Canvas width ${canvas.width} height ${canvas.height}`);
         this.ctx = ctx;
-        this.cellWidth = 10;
+        this.cellWidth = 15;
         this.grid = {
             maxRows: canvas.height / this.cellWidth,
             maxColumns: canvas.width / this.cellWidth
@@ -44,11 +44,11 @@ class Game {
     _drawJetwall() {
         this.ctx.fillStyle = player1Config.color;
         const cycle1 = game.player1.jetwall[0];
-        this.ctx.fillRect(cycle1.column * this.cellWidth, cycle1.row * this.cellWidth, 10, 10);
+        this.ctx.fillRect(cycle1.column * this.cellWidth, cycle1.row * this.cellWidth, this.cellWidth, this.cellWidth);
 
         this.ctx.fillStyle = player2Config.color;
         const cycle2 = game.player2.jetwall[0];
-        this.ctx.fillRect(cycle2.column * this.cellWidth, cycle2.row * this.cellWidth, 10, 10);
+        this.ctx.fillRect(cycle2.column * this.cellWidth, cycle2.row * this.cellWidth, this.cellWidth, this.cellWidth);
     }
     
     _hasCrashedOwnJetwall(cycle) {
@@ -116,7 +116,7 @@ class Game {
         }
         this.explosionLoop(crashPosition);
         this.stopAnimation();
-        this.gameOver(this.winner);
+        setTimeout(() => this.gameOver(this.winner), 1000);
     }
 
     _update() {

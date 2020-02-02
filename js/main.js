@@ -8,7 +8,7 @@ function setupCanvas() {
     canvas = document.getElementById("game-grid");
     canvas.classList.toggle("hidden", false);
     canvas.width = 1350;
-    canvas.height = 800;
+    canvas.height = 810;
     ctx = canvas.getContext('2d');
 }
 
@@ -64,9 +64,9 @@ function start() {
 function gameOver(winner) {
     stopMusic();
     if (winner === "neither") {
-        console.log("Both players have derezzed.");
+        alert("Both players have derezzed.");
     } else {
-        console.log(`${winner} has won.`);
+        alert(`${winner} has won.`);
     }
 }
 
@@ -77,13 +77,13 @@ function hideStartScreen() {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM content loaded');
+    startAudio();
     const startButton = document.getElementById('start');
     startButton.onclick = () => {
         console.log('Start game button clicked');
         hideStartScreen();
         // html.requestFullscreen();
         setupCanvas();
-        startAudio();
         // startCycleAudio();
         start();
     };
