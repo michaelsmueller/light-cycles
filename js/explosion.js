@@ -80,13 +80,13 @@ Explosion.prototype.update = function(index) {
 };
 
 Explosion.prototype.draw = function() {
-    ctx.beginPath(); 
-    let trailEndX = this.trail[this.trail.length - 1][0];
-    let trailEndY = this.trail[this.trail.length - 1][1];
-    ctx.moveTo(trailEndX, trailEndY);
-    ctx.lineTo(this.x, this.y);
-    ctx.strokeStyle = EXPLOSION_COLOR;
-    ctx.stroke();
+    // ctx.beginPath(); 
+    // let trailEndX = this.trail[this.trail.length - 1][0];
+    // let trailEndY = this.trail[this.trail.length - 1][1];
+    // ctx.moveTo(trailEndX, trailEndY);
+    // ctx.lineTo(this.x, this.y);
+    // ctx.strokeStyle = EXPLOSION_COLOR;
+    // ctx.stroke();
 };
 
 function Particle(x, y) {
@@ -128,6 +128,7 @@ Particle.prototype.draw = function() {
     ctx.moveTo(trailEndX, trailEndY);
     ctx.lineTo(this.x, this.y);
     ctx.strokeStyle = PARTICLE_COLOR;
+    ctx.lineWidth = 2;
     ctx.stroke();
 };
 
