@@ -116,7 +116,7 @@ class Game {
         }
         this.explosionLoop(crashPosition);
         this.stopAnimation();
-        setTimeout(() => this.gameOver(this.winner), 1);
+        setTimeout(() => this.gameOver(this.winner, player1Config, player2Config), 1);
     }
 
     _update() {

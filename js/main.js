@@ -41,7 +41,7 @@ function playMusic(bufferList) {
 }
 
 function stopMusic() {
-    music.stop(0);
+    // music.stop(0);
 }
 
 function startCycleAudio() {
@@ -61,18 +61,26 @@ function start() {
     game.start();
 }
 
-function gameOver(winner) {
+function gameOver(winner, player1Config, player2Config) {
     stopMusic();
-
 
     const gameOverScreen = document.getElementById('game-over-screen');
     gameOverScreen.classList.toggle("hidden");
 
     const winnerMessage = document.getElementById('winner-message');
-    if (winner === "neither") {
-        winnerMessage.innerText = "Both players have derezzed";
-    } else {
-        winnerMessage.innerText = `${winner} has won.`;
+    switch (winner) {
+        case "neither":
+            winnerMessage.innerText = "Both players have derezzed.";
+            winnerMessage.style.backgroundColor = "white";
+            break;
+        case "Player 1":
+            winnerMessage.innerText = "Player 1 has won – Player 2 derezzed.";
+            winnerMessage.style.backgroundColor = player1Config.color;
+            break;
+        case "Player 2":
+            winnerMessage.innerText = "Player 2 has won – Player 1 derezzed.";
+            winnerMessage.style.backgroundColor = player2Config.color;
+            break;
     }
 
     const restartButton = document.getElementById('restart');
@@ -95,7 +103,7 @@ function hideStartScreen() {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM content loaded');
-    startAudio();
+    // startAudio();
     const startButton = document.getElementById('start');
     startButton.onclick = () => {
         console.log('Start game button clicked');

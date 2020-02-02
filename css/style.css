@@ -122,10 +122,9 @@ body {
 }
 
 #winner-message {
-    height: 100px;
     font-size: 24px;
     font-family: Courier, monospace;
-    color: white;
+    color: black;
 }
 
 #game-grid {
