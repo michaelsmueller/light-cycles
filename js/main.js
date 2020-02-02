@@ -70,15 +70,15 @@ function gameOver(winner, player1Config, player2Config) {
     const winnerMessage = document.getElementById('winner-message');
     switch (winner) {
         case "neither":
-            winnerMessage.innerText = "Both players have derezzed.";
+            winnerMessage.innerText = "BOTH PLAYERS DEREZZED";
             winnerMessage.style.backgroundColor = "white";
             break;
         case "Player 1":
-            winnerMessage.innerText = "Player 1 has won – Player 2 derezzed.";
+            winnerMessage.innerText = "PLAYER 1 WON – PLAYER 2 DEREZZED";
             winnerMessage.style.backgroundColor = player1Config.color;
             break;
         case "Player 2":
-            winnerMessage.innerText = "Player 2 has won – Player 1 derezzed.";
+            winnerMessage.innerText = "PLAYER 2 WON – PLAYER 1 DEREZZED";
             winnerMessage.style.backgroundColor = player2Config.color;
             break;
     }
