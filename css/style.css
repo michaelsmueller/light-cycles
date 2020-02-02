@@ -26,10 +26,10 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    background-image: url("../img/gold-light-cycle-1439.jpg");
+    background-image: url("../img/gold-light-cycle-1440.jpg");
     background-size: contain;
     background-repeat: no-repeat;
-    background-position:center;
+    background-position: center;
 }
 
 #light-cycles-logo {
@@ -43,13 +43,28 @@ body {
 }
 
 #start {
-    width: 200px;
-    height: 80px;
+    padding-top: 300px;
+}
+
+#start button {
+    width: 160px;
+    height: 60px;
     font-size: 24px;
-    font-family: Courier, monospae;
+    font-family: Courier, monospace;
     color: white;
-    background-color: gray;
-    border: none;
+    background-color: transparent;
+    border: 2px solid white;
+    outline:none;
+}
+
+#start button:hover {
+    background-color: white;
+    color: black;
+}
+
+#start button:active {
+    background-color: white;
+    color: gray;
 }
 
 #player-controls {
