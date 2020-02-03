@@ -130,8 +130,20 @@ body {
     justify-content: space-between;
 }
 
-#score span {
+#p1, #p2 {
     color: white;
+}
+
+#p1-jetwall {
+    color: #00FFFF;
+}
+
+#p2-jetwall {
+    color: #FF0080;
+}
+
+#p1-fuel, #p2-fuel {
+    color: #fbf455;
 }
 
 #game-over-screen {
@@ -150,7 +162,7 @@ body {
     font-size: 24px;
     font-family: Courier, monospace;
     color: black;
-    padding: 10px;
+    padding: 5px;
     margin-bottom: 50px;
 }
 

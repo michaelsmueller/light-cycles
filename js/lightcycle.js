@@ -135,6 +135,11 @@ class Fuel {
     this.column = null;
   }
 
+  reset() {
+    this.row = null;
+    this.column = null;
+  }
+
   _returnRandom(max) {
     return Math.floor(Math.random() * max);
   }

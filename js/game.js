@@ -4,9 +4,9 @@ const player1Config = {
     startingRow: 1,
     startingColumn: 1,
     startingDirection: "right",
-    baseSpeed: 200,         // lower is faster
+    baseSpeed: 100,         // lower is faster
     topSpeed: 50,
-    fuel: 100,
+    fuel: 50,
     color: "#00FFFF"    // cyan
 };
 
@@ -14,9 +14,9 @@ const player2Config = {
     startingRow: 50,
     startingColumn: 90,
     startingDirection: "left",
-    baseSpeed: 200,         // lower is faster
+    baseSpeed: 100,         // lower is faster
     topSpeed: 50,
-    fuel: 100,
+    fuel: 50,
     color: "#FF0080"    // fuchsia
 };
 
@@ -43,6 +43,7 @@ class Game {
         this._stopPlayers();
         this.player1.reset(player1Config);
         this.player2.reset(player2Config);
+        this.fuel.reset();
         this.winner = "";
         this.stopAnimation();
     }
@@ -127,12 +128,10 @@ class Game {
         const x = this.fuel.column * this.cellWidth + this.cellWidth / 2;
         const y = this.fuel.row * this.cellWidth + this.cellWidth / 2;
         const radius = this.cellWidth / 2;
-        this.ctx.strokeStyle = "#fbf455";    // nuclear yellow
-        this.ctx.fillStyle = "#fbf455";
+        this.ctx.fillStyle = "#fbf455";      // yellow
         this.ctx.beginPath();
         this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
         this.ctx.fill();
-        this.ctx.stroke();
         this.ctx.closePath();
     }
 
@@ -186,10 +185,6 @@ class Game {
         game.updateScore();
         this._drawJetwall();
         this._checkCrash();
-        if (!this.fuel.row) {
-            this.generateFuel();
-            this.drawFuel();
-        }
         this.checkFuelPickup();
         if (this.player1.crashed || this.player2.crashed) {
             this._endingSequence();
@@ -278,6 +273,10 @@ class Game {
         this.clearGrid();
         this.player1.move();
         this.player2.move();
+        if (!this.fuel.row) {
+            this.generateFuel();
+            this.drawFuel();
+        }
         this.interval = window.requestAnimationFrame(this._update.bind(this));
         this._assignControlsToKeys();
     }
