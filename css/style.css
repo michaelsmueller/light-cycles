@@ -47,8 +47,7 @@ body {
     padding-top: 300px;
 }
 
-#start button,
-#restart button {
+#start button {
     width: 160px;
     height: 60px;
     font-size: 24px;
@@ -64,18 +63,29 @@ body {
     color: black;
 }
 
-#restart button:hover {
-    background-color: white;
-    color: black;
-}
-
 #start button:active {
     background-color: white;
     color: gray;
 }
 
-#restart button:active {
+#restart button {
+    width: 160px;
+    height: 60px;
+    font-size: 24px;
+    font-family: Courier, monospace;
+    color: black;
     background-color: white;
+    border: 2px solid white;
+    outline:none;
+}
+
+#restart button:hover {
+    background-color: black;
+    color: white;
+}
+
+#restart button:active {
+    background-color: black;
     color: gray;
 }
 

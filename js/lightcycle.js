@@ -12,10 +12,11 @@ class LightCycle {
       this.startingRow = playerConfig.startingRow;
       this.startingColumn = playerConfig.startingColumn;
       this.direction = playerConfig.startingDirection;
-      this.initialJetwall = [ { row: this.startingRow, column: this.startingColumn } ];
-      this.jetwall = [...this.initialJetwall];
-      this.baseSpeed = playerConfig.speed;
-      this.speed = playerConfig.speed;
+      this.jetwall = [ { row: this.startingRow, column: this.startingColumn } ];
+      this.speed = playerConfig.baseSpeed;
+      this.baseSpeed = playerConfig.baseSpeed;
+      this.topSpeed = playerConfig.topSpeed;
+      this.fuel = 50;
       this.crashed = false;
       this.intervalId = undefined;
     }
@@ -87,11 +88,28 @@ class LightCycle {
     }
 
     speedUp() {
-      this.speed = this.baseSpeed - 50;
+      if (this.fuel > 0) {
+        this.speed = this.topSpeed;
+      }
     }
 
     slowDown() {
       this.speed = this.baseSpeed;
+    }
+
+    burnFuel() {
+      if (!this.burnFuelId && this.fuel > 0) {
+        this.burnFuelId = setInterval( () => {
+          this.fuel -= 1;
+        }, this.topSpeed);
+      }
+    }
+
+    stopBurningFuel() {
+      if (this.burnFuelId) {
+        clearInterval(this.burnFuelId);
+        this.burnFuelId = null;
+      }
     }
 
     stop() {

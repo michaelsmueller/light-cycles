@@ -20,8 +20,15 @@ function setupScore() {
 function updateScore() {
     const player1Score = document.getElementById("p1-jetwall-length");
     player1Score.innerText = game.player1.jetwall.length;
+
+    const player1Fuel = document.getElementById("p1-fuel");
+    player1Fuel.innerText = game.player1.fuel;
+
     const player2Score = document.getElementById("p2-jetwall-length");
     player2Score.innerText = game.player2.jetwall.length;
+
+    const player2Fuel = document.getElementById("p2-fuel");
+    player2Fuel.innerText = game.player2.fuel;
 }
 
 function startAudio() {

@@ -4,7 +4,8 @@ const player1Config = {
     startingRow: 1,
     startingColumn: 1,
     startingDirection: "right",
-    speed: 100,         // lower is faster
+    baseSpeed: 300,         // lower is faster
+    topSpeed: 50,
     color: "#00FFFF"    // cyan
 };
 
@@ -12,7 +13,8 @@ const player2Config = {
     startingRow: 50,
     startingColumn: 80,
     startingDirection: "left",
-    speed: 100,         // lower is faster
+    baseSpeed: 300,         // lower is faster
+    topSpeed: 50,
     color: "#FF0080"    // fuchsia
 };
 
@@ -155,6 +157,7 @@ class Game {
                     break;
                 case 190: // period
                     this.player1.speedUp();
+                    this.player1.burnFuel();
                     break;
             }
             switch (e.keyCode) {
@@ -172,6 +175,7 @@ class Game {
                     break;
                 case 49: // 1
                     this.player2.speedUp();
+                    this.player2.burnFuel();
                     break;
             }
         });
@@ -180,9 +184,11 @@ class Game {
             switch (e.keyCode) {
                 case 190: // period
                     this.player1.slowDown();
+                    this.player1.stopBurningFuel();
                     break;
                 case 49: // 1
                     this.player2.slowDown();
+                    this.player2.stopBurningFuel();
                     break;
             }
         });
