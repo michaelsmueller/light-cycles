@@ -16,7 +16,7 @@ class LightCycle {
       this.speed = playerConfig.baseSpeed;
       this.baseSpeed = playerConfig.baseSpeed;
       this.topSpeed = playerConfig.topSpeed;
-      this.fuel = 50;
+      this.fuel = playerConfig.fuel;
       this.crashed = false;
       this.intervalId = undefined;
     }
@@ -100,9 +100,14 @@ class LightCycle {
     burnFuel() {
       if (!this.burnFuelId && this.fuel > 0) {
         this.burnFuelId = setInterval( () => {
-          this.fuel -= 1;
+          if (this.fuel > 0) {
+            this.fuel -= 1;
+          } else {
+            this.slowDown();
+            this.stopBurningFuel();
+          }
         }, this.topSpeed);
-      }
+      } 
     }
 
     stopBurningFuel() {

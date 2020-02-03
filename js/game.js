@@ -6,15 +6,17 @@ const player1Config = {
     startingDirection: "right",
     baseSpeed: 300,         // lower is faster
     topSpeed: 50,
+    fuel: 100,
     color: "#00FFFF"    // cyan
 };
 
 const player2Config = {
     startingRow: 50,
-    startingColumn: 80,
+    startingColumn: 90,
     startingDirection: "left",
     baseSpeed: 300,         // lower is faster
     topSpeed: 50,
+    fuel: 100,
     color: "#FF0080"    // fuchsia
 };
 
