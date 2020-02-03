@@ -121,3 +121,22 @@ class LightCycle {
       clearTimeout(this.timeoutId);
     }
 }
+
+class Fuel {
+  constructor(grid) {
+    console.log("new Fuel contructor object");
+    this.maxRows = grid.maxRows;
+    this.maxColumns = grid.maxColumns;
+    this.row = null;
+    this.column = null;
+  }
+
+  _returnRandom(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+  _placeFuel() {
+    this.row = this._returnRandom(this.maxRows);
+    this.column = this._returnRandom(this.maxColumns);
+  }
+}

@@ -4,7 +4,7 @@ const player1Config = {
     startingRow: 1,
     startingColumn: 1,
     startingDirection: "right",
-    baseSpeed: 300,         // lower is faster
+    baseSpeed: 200,         // lower is faster
     topSpeed: 50,
     fuel: 100,
     color: "#00FFFF"    // cyan
@@ -14,7 +14,7 @@ const player2Config = {
     startingRow: 50,
     startingColumn: 90,
     startingDirection: "left",
-    baseSpeed: 300,         // lower is faster
+    baseSpeed: 200,         // lower is faster
     topSpeed: 50,
     fuel: 100,
     color: "#FF0080"    // fuchsia
@@ -33,6 +33,7 @@ class Game {
         };
         this.player1 = new LightCycle(this.grid, player1Config);
         this.player2 = new LightCycle(this.grid, player2Config);
+        this.fuel = new Fuel(this.grid);
         this.updateScore = updateScoreCallback;
         this.gameOver = gameOverCallback;
         this.winner = "";
@@ -93,16 +94,40 @@ class Game {
         }
     }
 
-    _stopPlayers() {
-        this.player1.stop();
-        this.player2.stop();
-    }
-
     _getCrashPosition(cycle) {
         return {
             x: cycle.jetwall[0].column * this.cellWidth + this.cellWidth / 2,
             y: cycle.jetwall[0].row * this.cellWidth + this.cellWidth / 2
         };
+    }
+
+    _isFuelOnJetwall(cycle) {
+        console.log("Checking isFuelOnJetwall");
+        let isFuelOnJetwall = false;
+        cycle.jetwall.forEach((position) => {
+            if (position.row === this.fuel.row && position.column === this.fuel.column) {
+                console.log("Fuel was on jetwall");
+                isFuelOnJetwall = true;
+            }
+        });
+        return isFuelOnJetwall;
+    }
+
+    _setupFuel() {
+        this.fuel._placeFuel();
+        while (this._isFuelOnJetwall(this.player1) || this._isFuelOnJetwall(this.player2)) {
+            this.fuel._placeFuel();
+        }
+    }
+
+    drawFuel() {
+        this.ctx.fillStyle = "white";
+        this.ctx.fillRect(this.fuel.column * this.cellWidth, this.fuel.row * this.cellWidth, this.cellWidth, this.cellWidth);
+    }
+
+    _stopPlayers() {
+        this.player1.stop();
+        this.player2.stop();
     }
 
     _endingSequence() {
@@ -128,6 +153,10 @@ class Game {
         let gameOver = false;
         game.updateScore();
         this._drawJetwall();
+        if (!this.fuel.row) {
+            this._setupFuel();
+            this.drawFuel();
+        }
         this._checkCrash();
         if (this.player1.crashed || this.player2.crashed) {
             this._endingSequence();
