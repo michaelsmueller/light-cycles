@@ -61,7 +61,8 @@ class Game {
         let crashed = false;
         cycle.jetwall.forEach((position, index) => {
             if (index != 0) {
-                if (position.row === cycle.jetwall[0].row && position.column === cycle.jetwall[0].column) {
+                if (position.row === cycle.jetwall[0].row &&
+                    position.column === cycle.jetwall[0].column) {
                     crashed = true;
                 }
             }
@@ -72,7 +73,8 @@ class Game {
     _hasCrashedOtherJetwall(cycle1, cycle2) {
         let crashed = false;
         cycle2.jetwall.forEach((position, index) => {
-            if (position.row === cycle1.jetwall[0].row && position.column === cycle1.jetwall[0].column) {
+            if (position.row === cycle1.jetwall[0].row &&
+                position.column === cycle1.jetwall[0].column) {
                 crashed = true;
             }
         });
@@ -105,7 +107,8 @@ class Game {
         console.log("Checking isFuelOnJetwall");
         let isFuelOnJetwall = false;
         cycle.jetwall.forEach((position) => {
-            if (position.row === this.fuel.row && position.column === this.fuel.column) {
+            if (position.row === this.fuel.row &&
+                position.column === this.fuel.column) {
                 console.log("Fuel was on jetwall");
                 isFuelOnJetwall = true;
             }
@@ -123,6 +126,15 @@ class Game {
     drawFuel() {
         this.ctx.fillStyle = "white";
         this.ctx.fillRect(this.fuel.column * this.cellWidth, this.fuel.row * this.cellWidth, this.cellWidth, this.cellWidth);
+    }
+
+    hasPickedUpFuel(cycle) {
+        if (cycle.jetwall[0].row === this.fuel.row && 
+            cycle.jetwall[0].column === this.fuel.column) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     _stopPlayers() {
@@ -158,6 +170,11 @@ class Game {
             this.drawFuel();
         }
         this._checkCrash();
+        if (this.hasPickedUpFuel(this.player1)) {
+            console.log("Player 1 picked up fuel");
+        } else if (this.hasPickedUpFuel(this.player2)) {
+            console.log("Player 2 picked up fuel");
+        }
         if (this.player1.crashed || this.player2.crashed) {
             this._endingSequence();
             gameOver = true;
