@@ -116,7 +116,7 @@ class Game {
         return isFuelOnJetwall;
     }
 
-    _setupFuel() {
+    generateFuel() {
         this.fuel._placeFuel();
         while (this._isFuelOnJetwall(this.player1) || this._isFuelOnJetwall(this.player2)) {
             this.fuel._placeFuel();
@@ -134,6 +134,18 @@ class Game {
             return true;
         } else {
             return false;
+        }
+    }
+
+    checkFuelPickup() {
+        if (this.hasPickedUpFuel(this.player1)) {
+            this.player1.addFuel();
+            this.generateFuel();
+            this.drawFuel();
+        } else if (this.hasPickedUpFuel(this.player2)) {
+            this.player2.addFuel();
+            this.generateFuel();
+            this.drawFuel();
         }
     }
 
@@ -165,16 +177,12 @@ class Game {
         let gameOver = false;
         game.updateScore();
         this._drawJetwall();
+        this._checkCrash();
         if (!this.fuel.row) {
-            this._setupFuel();
+            this.generateFuel();
             this.drawFuel();
         }
-        this._checkCrash();
-        if (this.hasPickedUpFuel(this.player1)) {
-            console.log("Player 1 picked up fuel");
-        } else if (this.hasPickedUpFuel(this.player2)) {
-            console.log("Player 2 picked up fuel");
-        }
+        this.checkFuelPickup();
         if (this.player1.crashed || this.player2.crashed) {
             this._endingSequence();
             gameOver = true;

@@ -117,6 +117,10 @@ class LightCycle {
       }
     }
 
+    addFuel() {
+      this.fuel += 20;
+    }
+
     stop() {
       clearTimeout(this.timeoutId);
     }
