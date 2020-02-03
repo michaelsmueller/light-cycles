@@ -124,8 +124,16 @@ class Game {
     }
 
     drawFuel() {
-        this.ctx.fillStyle = "white";
-        this.ctx.fillRect(this.fuel.column * this.cellWidth, this.fuel.row * this.cellWidth, this.cellWidth, this.cellWidth);
+        const x = this.fuel.column * this.cellWidth + this.cellWidth / 2;
+        const y = this.fuel.row * this.cellWidth + this.cellWidth / 2;
+        const radius = this.cellWidth / 2;
+        this.ctx.strokeStyle = "#fbf455";    // nuclear yellow
+        this.ctx.fillStyle = "#fbf455";
+        this.ctx.beginPath();
+        this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
+        this.ctx.fill();
+        this.ctx.stroke();
+        this.ctx.closePath();
     }
 
     hasPickedUpFuel(cycle) {
