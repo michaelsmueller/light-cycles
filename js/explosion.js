@@ -7,7 +7,7 @@ const PARTICLE_COLOR = "white";
 const PARTICLE_COUNT = 50;
 const PARTICLE_DECAY = 0.015;
 const PARTICLE_FRICTION = 1;   // size of explosion
-const PARTICLE_SPEED = 30;
+const PARTICLE_SPEED = 50;
 const PARTICLE_TRAIL_LENGTH = 1;
 
 window.requestAnimFrame = (() => {
