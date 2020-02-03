@@ -56,6 +56,7 @@ function playMusic(bufferList) {
     music.buffer = bufferList[0];
     console.log(music);
     music.connect(audioCtx.destination);
+    music.loop = true;
     music.start(0);
 }
 
@@ -93,7 +94,7 @@ function gameOver(winner, player1Config, player2Config) {
             winnerMessage.style.backgroundColor = "white";
             break;
         case "Player 1":
-            winnerMessage.innerText = "PLAYER X WON – PLAYER 2 DEREZZED";
+            winnerMessage.innerText = "PLAYER 1 WON – PLAYER 2 DEREZZED";
             winnerMessage.style.backgroundColor = player1Config.color;
             break;
         case "Player 2":

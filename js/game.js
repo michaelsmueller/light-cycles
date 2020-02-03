@@ -202,37 +202,37 @@ class Game {
                 e.preventDefault();
             }
             switch (e.keyCode) {
-                case 37: // left arrow
+                case 68: // d
                     this.player1.goLeft();
                     break;
-                case 38: // up arrow up
+                case 82: // r
                     this.player1.goUp();
                     break;
-                case 39: // right arrow
+                case 71: // g
                     this.player1.goRight();
                     break;
-                case 40: // down arrow
+                case 70: // f
                     this.player1.goDown();
                     break;
-                case 190: // period
+                case 49: // 1
                     this.player1.speedUp();
                     this.player1.burnFuel();
                     break;
             }
             switch (e.keyCode) {
-                case 65: // a
+                case 37: // left arrow
                     this.player2.goLeft();
                     break;
-                case 87: // w
+                case 38: // up arrow up
                     this.player2.goUp();
                     break;
-                case 68: // d
+                case 39: // right arrow
                     this.player2.goRight();
                     break;
-                case 83: // s
+                case 40: // down arrow
                     this.player2.goDown();
                     break;
-                case 49: // 1
+                case 188: // comma
                     this.player2.speedUp();
                     this.player2.burnFuel();
                     break;
@@ -241,11 +241,11 @@ class Game {
         document.addEventListener("keyup", e => {
             console.log(`Keyup ${e.keyCode} ${e.key}`);
             switch (e.keyCode) {
-                case 190: // period
+                case 49: // 1
                     this.player1.slowDown();
                     this.player1.stopBurningFuel();
                     break;
-                case 49: // 1
+                case 188: // comma
                     this.player2.slowDown();
                     this.player2.stopBurningFuel();
                     break;
