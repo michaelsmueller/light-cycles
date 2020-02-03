@@ -13,8 +13,15 @@ function setupCanvas() {
 }
 
 function setupScore() {
-    score = document.getElementById("score");
+    const score = document.getElementById("score");
     score.classList.toggle("hidden");
+}
+
+function updateScore() {
+    const player1Score = document.getElementById("p1-jetwall-length");
+    player1Score.innerText = game.player1.jetwall.length;
+    const player2Score = document.getElementById("p2-jetwall-length");
+    player2Score.innerText = game.player2.jetwall.length;
 }
 
 function startAudio() {
@@ -61,7 +68,7 @@ function start() {
     if (game) {
         game.reset();
     } else {
-        game = new Game(ctx, canvas, gameOver);
+        game = new Game(ctx, canvas, updateScore, gameOver);
     }
     game.start();
 }

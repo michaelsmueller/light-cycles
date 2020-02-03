@@ -19,7 +19,7 @@ const player2Config = {
 let crashPosition = {};
 
 class Game {
-    constructor(ctx, canvas, callback) {
+    constructor(ctx, canvas, updateScoreCallback, gameOverCallback) {
         console.log(`Canvas width ${canvas.width} height ${canvas.height}`);
         this.ctx = ctx;
         this.cellWidth = 15;
@@ -29,7 +29,8 @@ class Game {
         };
         this.player1 = new LightCycle(this.grid, player1Config);
         this.player2 = new LightCycle(this.grid, player2Config);
-        this.gameOver = callback;
+        this.updateScore = updateScoreCallback;
+        this.gameOver = gameOverCallback;
         this.winner = "";
     }
 
@@ -121,6 +122,7 @@ class Game {
 
     _update() {
         let gameOver = false;
+        game.updateScore();
         this._drawJetwall();
         this._checkCrash();
         if (this.player1.crashed || this.player2.crashed) {

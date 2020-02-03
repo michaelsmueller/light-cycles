@@ -120,6 +120,10 @@ body {
     justify-content: space-between;
 }
 
+#score span {
+    color: white;
+}
+
 #game-over-screen {
     position: absolute;
     top: 50%;
