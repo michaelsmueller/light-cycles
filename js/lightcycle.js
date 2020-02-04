@@ -133,7 +133,7 @@ class Bullet {
     this.maxColumns = grid.maxColumns;
     this.position = position;
     this.direction = direction;
-    this.speed = 200;
+    this.speed = 20;
     this.hitSomething = false;
     this.timeoutId = undefined;
   }

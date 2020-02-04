@@ -172,6 +172,13 @@ class Game {
         this.bullets.push(newBullet);
     }
 
+    drawBullets() {
+        this.ctx.fillStyle = "yellow";
+        this.bullets.forEach(bullet => {
+            this.ctx.fillRect(bullet.position.column * this.cellWidth, bullet.position.row * this.cellWidth, 5, 5);
+        });
+    }
+
     _endingSequence() {
         this._stopPlayers();
         if (this.player1.crashed && this.player2.crashed) {
@@ -195,6 +202,9 @@ class Game {
         let gameOver = false;
         game.updateScore();
         this._drawJetwall();
+        if (this.bullets.length > 0) {
+            this.drawBullets();
+        }
         this._checkCrash();
         this.checkFuelPickup();
         if (this.player1.crashed || this.player2.crashed) {
