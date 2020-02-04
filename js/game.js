@@ -4,20 +4,20 @@ const player1Config = {
     startingRow: 1,
     startingColumn: 1,
     startingDirection: "right",
-    baseSpeed: 200,         // lower is faster
+    baseSpeed: 100,         // lower is faster
     topSpeed: 50,
     fuel: 50,
-    color: "#00FFFF"    // cyan
+    color: "#00FFFF"        // cyan
 };
 
 const player2Config = {
     startingRow: 50,
     startingColumn: 90,
     startingDirection: "left",
-    baseSpeed: 200,         // lower is faster
+    baseSpeed: 100,         // lower is faster
     topSpeed: 50,
     fuel: 50,
-    color: "#FF0080"    // fuchsia
+    color: "#FF0080"       // fuchsia
 };
 
 let crashPosition = {};
@@ -62,7 +62,7 @@ class Game {
     _hasCrashedOwnJetwall(cycle) {
         let crashed = false;
         cycle.jetwall.forEach((position, index) => {
-            if (index > 3) {         // impossible to crash own jetwall until 4th step
+            if (index > 3) {       // impossible to crash own jetwall until 4th step (after 3 turns)
                 if (position.row === cycle.jetwall[0].row &&
                     position.column === cycle.jetwall[0].column) {
                     crashed = true;
@@ -130,6 +130,8 @@ class Game {
         const y = this.fuel.row * this.cellWidth + this.cellWidth / 2;
         const radius = this.cellWidth / 2;
         this.ctx.fillStyle = "#fbf455";      // yellow
+        this.ctx.strokeStyle = "#fbf455";
+        this.ctx.lineWidth = 1;
         this.ctx.beginPath();
         this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
         this.ctx.fill();
@@ -173,9 +175,31 @@ class Game {
     }
 
     drawBullets() {
-        this.ctx.fillStyle = "yellow";
+        const halfCell = this.cellWidth / 2;
         this.bullets.forEach(bullet => {
-            this.ctx.fillRect(bullet.position.column * this.cellWidth, bullet.position.row * this.cellWidth, 5, 5);
+            const x = bullet.position.column * this.cellWidth;
+            const y = bullet.position.row * this.cellWidth;
+            switch (bullet.direction) {
+                case "left":
+                    this.ctx.moveTo(x, y + halfCell);
+                    this.ctx.lineTo(x - 2 * halfCell, y + halfCell);
+                    break;
+                case "up":
+                    this.ctx.moveTo(x + halfCell, y);
+                    this.ctx.lineTo(x + halfCell, y + 2 * halfCell);
+                    break;
+                case "right":
+                    this.ctx.moveTo(x + 2 * halfCell, y + halfCell);
+                    this.ctx.lineTo(x + 4 * halfCell, y + halfCell);
+                    break;
+                case "down":
+                    this.ctx.moveTo(x + halfCell, y + 2 * halfCell);
+                    this.ctx.lineTo(x + halfCell, y + 4 * halfCell);
+                    break;
+            }
+            this.ctx.strokeStyle = "white";
+            this.ctx.lineWidth = 3;
+            this.ctx.stroke();
         });
     }
 
