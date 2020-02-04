@@ -130,8 +130,7 @@ class Game {
         const y = this.fuel.row * this.cellWidth + this.cellWidth / 2;
         const radius = this.cellWidth / 2;
         this.ctx.fillStyle = "#fbf455";      // yellow
-        this.ctx.strokeStyle = "#fbf455";
-        this.ctx.lineWidth = 1;
+        this.ctx.lineWidth = 0;
         this.ctx.beginPath();
         this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
         this.ctx.fill();
@@ -176,6 +175,7 @@ class Game {
 
     drawBullets() {
         const halfCell = this.cellWidth / 2;
+        this.ctx.beginPath();
         this.bullets.forEach(bullet => {
             const x = bullet.position.column * this.cellWidth;
             const y = bullet.position.row * this.cellWidth;
@@ -197,9 +197,18 @@ class Game {
                     this.ctx.lineTo(x + halfCell, y + 4 * halfCell);
                     break;
             }
-            this.ctx.strokeStyle = "white";
-            this.ctx.lineWidth = 3;
+            this.ctx.strokeStyle = "yellow";
+            this.ctx.lineWidth = 5;
             this.ctx.stroke();
+            this.ctx.closePath();
+        });
+    }
+
+    eraseBulletTrails() {
+        this.bullets.forEach(bullet => {
+            const x = bullet.position.column * this.cellWidth;
+            const y = bullet.position.row * this.cellWidth;
+            this.ctx.clearRect(x, y, this.cellWidth, this.cellWidth);
         });
     }
 
@@ -228,6 +237,7 @@ class Game {
         this._drawJetwall();
         if (this.bullets.length > 0) {
             this.drawBullets();
+            this.eraseBulletTrails();
         }
         this._checkCrash();
         this.checkFuelPickup();
