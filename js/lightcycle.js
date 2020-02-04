@@ -126,6 +126,45 @@ class LightCycle {
     }
 }
 
+class Bullet {
+  constructor(grid, position, direction) {
+    console.log("new Bullet contructor object");
+    this.maxRows = grid.maxRows;
+    this.maxColumns = grid.maxColumns;
+    this.position = position;
+    this.direction = direction;
+    this.speed = 20;
+    this.hitSomething = false;
+    this.timeoutId = undefined;
+  }
+
+  _moveForward() {
+    console.log('bullet is moving');
+    switch (this.direction) {
+      case "left":
+        this.position.column = (this.position.column - 1 + this.maxColumns) % this.maxColumns;
+        break;
+      case "up":
+        this.position.row = (this.position.row - 1 + this.maxRows) % this.maxRows;
+        break;
+      case "right":
+        this.position.column = (this.position.column + 1) % this.maxColumns;
+        break;
+      case "down":
+        this.position.row = (this.position.row + 1) % this.maxRows;
+        break;
+    }
+  }
+  
+  move() {
+    const repeatSetTimout = function () {
+      this._moveForward();
+      this.timeoutId = setTimeout(repeatSetTimout.bind(this), this.speed);
+    };
+    this.timeoutId = setTimeout(repeatSetTimout.bind(this), this.speed);
+  }
+}
+
 class Fuel {
   constructor(grid) {
     console.log("new Fuel contructor object");

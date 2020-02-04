@@ -34,6 +34,7 @@ class Game {
         this.player1 = new LightCycle(this.grid, player1Config);
         this.player2 = new LightCycle(this.grid, player2Config);
         this.fuel = new Fuel(this.grid);
+        this.bullets = [];
         this.updateScore = updateScoreCallback;
         this.gameOver = gameOverCallback;
         this.winner = "";
@@ -161,6 +162,12 @@ class Game {
         this.player2.stop();
     }
 
+    shoot(cycle) {
+        const newBullet = new Bullet(this.grid, cycle.jetwall[0], cycle.direction);
+        newBullet.move();
+        this.bullets.push(newBullet);
+    }
+
     _endingSequence() {
         this._stopPlayers();
         if (this.player1.crashed && this.player2.crashed) {
@@ -218,8 +225,9 @@ class Game {
                     this.player1.speedUp();
                     this.player1.burnFuel();
                     break;
-            }
-            switch (e.keyCode) {
+                case 50: // 2
+                    this.shoot(this.player1);
+                    break;
                 case 37: // left arrow
                     this.player2.goLeft();
                     break;
@@ -232,9 +240,12 @@ class Game {
                 case 40: // down arrow
                     this.player2.goDown();
                     break;
-                case 188: // comma
+                case 188: // , comma
                     this.player2.speedUp();
                     this.player2.burnFuel();
+                    break;
+                case 190: // . period
+                    this.shoot(this.player2);
                     break;
             }
         });
