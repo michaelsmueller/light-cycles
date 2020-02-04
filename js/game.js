@@ -4,7 +4,7 @@ const player1Config = {
     startingRow: 1,
     startingColumn: 1,
     startingDirection: "right",
-    baseSpeed: 100,         // lower is faster
+    baseSpeed: 200,         // lower is faster
     topSpeed: 50,
     fuel: 50,
     color: "#00FFFF"    // cyan
@@ -14,7 +14,7 @@ const player2Config = {
     startingRow: 50,
     startingColumn: 90,
     startingDirection: "left",
-    baseSpeed: 100,         // lower is faster
+    baseSpeed: 200,         // lower is faster
     topSpeed: 50,
     fuel: 50,
     color: "#FF0080"    // fuchsia
@@ -62,7 +62,7 @@ class Game {
     _hasCrashedOwnJetwall(cycle) {
         let crashed = false;
         cycle.jetwall.forEach((position, index) => {
-            if (index != 0) {
+            if (index > 3) {         // impossible to crash own jetwall until 4th step
                 if (position.row === cycle.jetwall[0].row &&
                     position.column === cycle.jetwall[0].column) {
                     crashed = true;
@@ -163,8 +163,12 @@ class Game {
     }
 
     shoot(cycle) {
-        const newBullet = new Bullet(this.grid, cycle.jetwall[0], cycle.direction);
-        newBullet.move();
+        const bulletPosition = {
+            row: cycle.jetwall[0].row,
+            column: cycle.jetwall[0].column
+        };
+        const newBullet = new Bullet(this.grid, bulletPosition, cycle.direction);
+        newBullet.moveBullet();
         this.bullets.push(newBullet);
     }
 

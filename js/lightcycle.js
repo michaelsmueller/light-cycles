@@ -26,7 +26,7 @@ class LightCycle {
     }
 
     _moveForward() {
-        let cycle = this.jetwall[0];
+		let cycle = this.jetwall[0];
         switch (this.direction) {
           case "left":
             this.jetwall.unshift({
@@ -133,13 +133,12 @@ class Bullet {
     this.maxColumns = grid.maxColumns;
     this.position = position;
     this.direction = direction;
-    this.speed = 20;
+    this.speed = 200;
     this.hitSomething = false;
     this.timeoutId = undefined;
   }
 
-  _moveForward() {
-    console.log('bullet is moving');
+  moveBulletForward() {
     switch (this.direction) {
       case "left":
         this.position.column = (this.position.column - 1 + this.maxColumns) % this.maxColumns;
@@ -156,9 +155,9 @@ class Bullet {
     }
   }
   
-  move() {
+  moveBullet() {
     const repeatSetTimout = function () {
-      this._moveForward();
+      this.moveBulletForward();
       this.timeoutId = setTimeout(repeatSetTimout.bind(this), this.speed);
     };
     this.timeoutId = setTimeout(repeatSetTimout.bind(this), this.speed);
