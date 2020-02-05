@@ -23,7 +23,7 @@ const player2Config = {
 };
 
 const bulletConfig = {
-    speed: 30,
+    speed: 20,
     bulletWidth: 5,
     explosionSize: 49,           // square of an odd number
     color: "#FBF455"             // yellow
@@ -241,7 +241,7 @@ class Game {
     _hasBulletHitJetwall(bullet, cycle) {
         let hasBulletHitJetwall = false;
         cycle.jetwall.forEach((position, index) => {
-            if (index > 1) {
+            if (index > 0) {
                 if (position.row === bullet.position.row &&
                     position.column === bullet.position.column) {
                     hasBulletHitJetwall = true;
@@ -252,9 +252,6 @@ class Game {
     }
 
     explode(bullet) {
-        bullet.hitSomething = true;
-        bullet.stop();
-
         const explosionWidth = Math.sqrt(bulletConfig.explosionSize);
         const x = bullet.position.column - (explosionWidth + 1) / 2 + 1;
         const y = bullet.position.row - (explosionWidth + 1) / 2 + 1;
@@ -263,11 +260,30 @@ class Game {
         this.ctx.fillRect(x * this.cellWidth, y * this.cellWidth, explosionWidth * this.cellWidth, explosionWidth * this.cellWidth);
     }
 
+    clearJetwall(bullet) {
+        const explosionWidth = Math.sqrt(bulletConfig.explosionSize);
+        const x = bullet.position.column - (explosionWidth + 1) / 2 + 1;
+        const y = bullet.position.row - (explosionWidth + 1) / 2 + 1;
+
+        console.log(`${x} and ${y}`);
+        console.log('clearing Jetwall');
+        for (let column = x; column < x + explosionWidth; column++) {
+            for (let row = y; row < y + explosionWidth; row++) {
+                this.ctx.fillStyle = "red";
+                this.ctx.fillRect(column * this.cellWidth, row * this.cellWidth, this.cellWidth, this.cellWidth);
+            }
+        }
+    }
+
     checkBulletStrike() {
         this.bullets.forEach(bullet => {
             if (this._hasBulletHitJetwall(bullet, this.player1) || 
                 this._hasBulletHitJetwall(bullet, this.player2)) {
+                bullet.hitSomething = true;
+                bullet.stop();
                 this.explode(bullet);
+                this.clearJetwall(bullet);
+                this.bullets.splice(this.bullets.indexOf(bullet), 1);
             }
         });
     }
