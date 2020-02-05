@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // hideScrollBars();
         setupCanvas();
         setupScore();
-        // startCycleAudio();
+        startCycleAudio();
         setTimeout(() => start(), 1000);    // allow time for full screen before drawing on canvas
     };
 });

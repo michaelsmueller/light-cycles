@@ -237,6 +237,30 @@ class Game {
         });
     }
 
+    _hasBulletHitJetwall(bullet, cycle) {
+        let hasBulletHitJetwall = false;
+        cycle.jetwall.forEach((position) => {
+            if (position.row === bullet.position.row &&
+                position.column === bullet.position.column) {
+                hasBulletHitJetwall = true;
+            }
+        });
+        return hasBulletHitJetwall;
+    }
+
+    checkBulletStrike() {
+        this.bullets.forEach(bullet => {
+            if (this._hasBulletHitJetwall(bullet, this.player1)) {
+                bullet.hitSomething = true;
+                console.log('bullet hit Player 1 jetwall');
+            }
+            if (this._hasBulletHitJetwall(bullet, this.player2)) {
+                bullet.hitSomething = true;
+                console.log('bullet hit Player 2 jetwall');
+            }
+        });
+    }
+
     stopBullets() {
         if (this.bullets.length > 0) {
             this.bullets.forEach(bullet => bullet.stop());
@@ -269,6 +293,7 @@ class Game {
         if (this.bullets.length > 0) {
             this.drawBullets();
             this.eraseBulletTrails();
+            this.checkBulletStrike();
         }
         this.checkFuelPickup();
         this._drawJetwall();
