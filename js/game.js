@@ -260,6 +260,16 @@ class Game {
         this.ctx.fillRect(x * this.cellWidth, y * this.cellWidth, blastWidth * this.cellWidth, blastWidth * this.cellWidth);
     }
 
+    spliceJetwall(blast, cycle) {
+        cycle.jetwall.forEach((position, index) => {
+            if (position.row === blast.row &&
+                position.column === blast.column) {
+                cycle.jetwall.splice(index, 1);
+                console.log(`Splicing jetwall at ${blast.row}, ${blast.column}`);
+            }
+        });
+    }
+
     clearJetwall(bullet) {
         const blastWidth = Math.sqrt(bulletConfig.blastSize);
         const x = bullet.position.column - (blastWidth + 1) / 2 + 1;
@@ -268,9 +278,13 @@ class Game {
         console.log(`${x} and ${y}`);
         console.log('clearing Jetwall');
         for (let column = x; column < x + blastWidth; column++) {
-            for (let row = y; row < y + blastWidth; row++) {
-
-                
+            for (let row = y; row < y + blastWidth; row++) {  
+                const blast = {
+                    row: row,
+                    column: column
+                };
+                this.spliceJetwall(blast, this.player1);
+                this.spliceJetwall(blast, this.player2);
                 setTimeout(() => this.ctx.clearRect(column * this.cellWidth, row * this.cellWidth, this.cellWidth, this.cellWidth), 100);
             }
         }
