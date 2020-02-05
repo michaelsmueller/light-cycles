@@ -25,6 +25,7 @@ const player2Config = {
 const bulletConfig = {
     speed: 30,
     bulletWidth: 5,
+    explosionSize: 49,           // square of an odd number
     color: "#FBF455"             // yellow
 };
 
@@ -87,7 +88,7 @@ class Game {
 
     _hasCrashedOtherJetwall(cycle1, cycle2) {
         let crashed = false;
-        cycle2.jetwall.forEach((position, index) => {
+        cycle2.jetwall.forEach(position => {
             if (position.row === cycle1.jetwall[0].row &&
                 position.column === cycle1.jetwall[0].column) {
                 crashed = true;
@@ -239,24 +240,34 @@ class Game {
 
     _hasBulletHitJetwall(bullet, cycle) {
         let hasBulletHitJetwall = false;
-        cycle.jetwall.forEach((position) => {
-            if (position.row === bullet.position.row &&
-                position.column === bullet.position.column) {
-                hasBulletHitJetwall = true;
+        cycle.jetwall.forEach((position, index) => {
+            if (index > 1) {
+                if (position.row === bullet.position.row &&
+                    position.column === bullet.position.column) {
+                    hasBulletHitJetwall = true;
+                }
             }
         });
         return hasBulletHitJetwall;
     }
 
+    explode(bullet) {
+        bullet.hitSomething = true;
+        bullet.stop();
+
+        const explosionWidth = Math.sqrt(bulletConfig.explosionSize);
+        const x = bullet.position.column - (explosionWidth + 1) / 2 + 1;
+        const y = bullet.position.row - (explosionWidth + 1) / 2 + 1;
+
+        this.ctx.fillStyle = "white";
+        this.ctx.fillRect(x * this.cellWidth, y * this.cellWidth, explosionWidth * this.cellWidth, explosionWidth * this.cellWidth);
+    }
+
     checkBulletStrike() {
         this.bullets.forEach(bullet => {
-            if (this._hasBulletHitJetwall(bullet, this.player1)) {
-                bullet.hitSomething = true;
-                console.log('bullet hit Player 1 jetwall');
-            }
-            if (this._hasBulletHitJetwall(bullet, this.player2)) {
-                bullet.hitSomething = true;
-                console.log('bullet hit Player 2 jetwall');
+            if (this._hasBulletHitJetwall(bullet, this.player1) || 
+                this._hasBulletHitJetwall(bullet, this.player2)) {
+                this.explode(bullet);
             }
         });
     }
