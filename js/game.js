@@ -25,7 +25,7 @@ const player2Config = {
 const bulletConfig = {
     speed: 20,
     bulletWidth: 5,
-    blastSize: 49,           // square of an odd number
+    blastSize: 25,           // square of an odd number
     color: "#FBF455"             // yellow
 };
 
