@@ -16,7 +16,8 @@ class LightCycle {
 		this.speed = playerConfig.baseSpeed;
 		this.baseSpeed = playerConfig.baseSpeed;
 		this.topSpeed = playerConfig.topSpeed;
-		this.fuel = playerConfig.fuel;
+        this.fuel = playerConfig.fuel;
+        this.bulletCost = playerConfig.bulletCost;
 		this.crashed = false;
 		this.intervalId = undefined;
 	}
@@ -121,8 +122,9 @@ class LightCycle {
 		this.fuel += 20;
 	}
 
-	shootBullet() {
-        this.fuel -= 20;
+	useFuelForBullet() {
+        console.log(this.bulletCost);
+        this.fuel -= this.bulletCost;
 	}
 
 	stop() {

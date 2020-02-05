@@ -6,7 +6,8 @@ const player1Config = {
     startingDirection: "right",
     baseSpeed: 120,              // lower is faster
     topSpeed: 60,
-    fuel: 50,
+    fuel: 100,
+    bulletCost: 20,
     color: "#00FFFF"             // cyan
 };
 
@@ -16,7 +17,8 @@ const player2Config = {
     startingDirection: "left",
     baseSpeed: 120,              // lower is faster
     topSpeed: 60,
-    fuel: 50,
+    fuel: 100,
+    bulletCost: 20,
     color: "#FF0080"             // fuchsia
 };
 
@@ -185,7 +187,6 @@ class Game {
     }
 
     drawBullets() {
-        console.log('drawing bullets');
         const halfCell = this.cellWidth / 2;
         this.bullets.forEach(bullet => {
             const x = bullet.position.column * this.cellWidth;
@@ -305,7 +306,10 @@ class Game {
                     this.player1.burnFuel();
                     break;
                 case 50: // 2
-                    this.shoot(this.player1);
+                    if (this.player1.fuel >= player1Config.bulletCost) {
+                        this.player1.useFuelForBullet();
+                        this.shoot(this.player1);
+                    }
                     break;
                 case 37: // left arrow
                     this.player2.goLeft();
@@ -324,7 +328,10 @@ class Game {
                     this.player2.burnFuel();
                     break;
                 case 190: // . period
-                    this.shoot(this.player2);
+                    if (this.player2.fuel >= player2Config.bulletCost) {
+                        this.player2.useFuelForBullet();
+                        this.shoot(this.player2);
+                    }
                     break;
             }
         });
