@@ -55,6 +55,7 @@ class Game {
         this.player1.reset(player1Config);
         this.player2.reset(player2Config);
         this.fuel.reset();
+        this.bullets = [];
         this.winner = "";
         this.stopAnimation();
     }
@@ -184,11 +185,12 @@ class Game {
     }
 
     drawBullets() {
+        console.log('drawing bullets');
         const halfCell = this.cellWidth / 2;
-        this.ctx.beginPath();
         this.bullets.forEach(bullet => {
             const x = bullet.position.column * this.cellWidth;
             const y = bullet.position.row * this.cellWidth;
+            this.ctx.beginPath();
             switch (bullet.direction) {
                 case "left":
                     this.ctx.moveTo(x, y + halfCell);
@@ -210,7 +212,7 @@ class Game {
             this.ctx.strokeStyle = bulletConfig.color;
             this.ctx.lineWidth = bulletConfig.bulletWidth;
             this.ctx.stroke();
-            // this.ctx.closePath();
+            this.ctx.closePath();
         });
     }
 
