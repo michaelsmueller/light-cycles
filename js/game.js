@@ -4,8 +4,8 @@ const player1Config = {
     startingRow: 1,
     startingColumn: 1,
     startingDirection: "right",
-    baseSpeed: 100,              // lower is faster
-    topSpeed: 50,
+    baseSpeed: 120,              // lower is faster
+    topSpeed: 60,
     fuel: 50,
     color: "#00FFFF"             // cyan
 };
@@ -14,14 +14,15 @@ const player2Config = {
     startingRow: 50,
     startingColumn: 90,
     startingDirection: "left",
-    baseSpeed: 100,              // lower is faster
-    topSpeed: 50,
+    baseSpeed: 120,              // lower is faster
+    topSpeed: 60,
     fuel: 50,
     color: "#FF0080"             // fuchsia
 };
 
 const bulletConfig = {
-    speed: 20,
+    speed: 30,
+    bulletWidth: 5,
     color: "#FBF455"             // yellow
 };
 
@@ -177,7 +178,7 @@ class Game {
             row: cycle.jetwall[0].row,
             column: cycle.jetwall[0].column
         };
-        const newBullet = new Bullet(this.grid, bulletPosition, cycle.direction);
+        const newBullet = new Bullet(this.grid, bulletPosition, cycle.direction, bulletConfig.speed);
         newBullet.moveBullet();
         this.bullets.push(newBullet);
     }
@@ -206,23 +207,42 @@ class Game {
                     this.ctx.lineTo(x + halfCell, y + 4 * halfCell);
                     break;
             }
-            this.ctx.strokeStyle = "yellow";
-            this.ctx.lineWidth = 5;
+            this.ctx.strokeStyle = bulletConfig.color;
+            this.ctx.lineWidth = bulletConfig.bulletWidth;
             this.ctx.stroke();
-            this.ctx.closePath();
+            // this.ctx.closePath();
         });
+    }
+
+    hasJustBeenFired(bullet, cycle) {
+        if (bullet.position.row === cycle.jetwall[0].row &&
+            bullet.position.column === cycle.jetwall[0].column) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     eraseBulletTrails() {
         this.bullets.forEach(bullet => {
             const x = bullet.position.column * this.cellWidth;
             const y = bullet.position.row * this.cellWidth;
-            this.ctx.clearRect(x, y, this.cellWidth, this.cellWidth);
+            if (!this.hasJustBeenFired(bullet, this.player1) && 
+                !this.hasJustBeenFired(bullet, this.player2)) {
+                this.ctx.clearRect(x, y, this.cellWidth, this.cellWidth);
+            }
         });
+    }
+
+    stopBullets() {
+        if (this.bullets.length > 0) {
+            this.bullets.forEach(bullet => bullet.stop());
+        }
     }
 
     _endingSequence() {
         this._stopPlayers();
+        this.stopBullets();
         if (this.player1.crashed && this.player2.crashed) {
             this.winner = "neither";
             crashPosition = this._getCrashPosition(this.player1);
@@ -237,19 +257,19 @@ class Game {
         }
         this.explosionLoop(crashPosition);
         this.stopAnimation();
-        setTimeout(() => this.gameOver(this.winner, player1Config, player2Config), 1);
+        setTimeout(() => this.gameOver(this.winner, player1Config, player2Config), 500);
     }
 
     _update() {
         let gameOver = false;
         game.updateScore();
-        this._drawJetwall();
         if (this.bullets.length > 0) {
             this.drawBullets();
             this.eraseBulletTrails();
         }
-        this._checkCrash();
         this.checkFuelPickup();
+        this._drawJetwall();
+        this._checkCrash();
         if (this.player1.crashed || this.player2.crashed) {
             this._endingSequence();
             gameOver = true;

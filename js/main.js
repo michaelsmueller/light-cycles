@@ -133,6 +133,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         setupCanvas();
         setupScore();
         // startCycleAudio();
-        start();
+        setTimeout(() => start(), 1000);    // allow time for full screen before drawing on canvas
     };
 });
