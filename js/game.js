@@ -25,7 +25,7 @@ const player2Config = {
 const bulletConfig = {
     speed: 20,
     bulletWidth: 5,
-    explosionSize: 49,           // square of an odd number
+    blastSize: 49,           // square of an odd number
     color: "#FBF455"             // yellow
 };
 
@@ -241,7 +241,7 @@ class Game {
     _hasBulletHitJetwall(bullet, cycle) {
         let hasBulletHitJetwall = false;
         cycle.jetwall.forEach((position, index) => {
-            if (index > 0) {
+            if (index > 2) {
                 if (position.row === bullet.position.row &&
                     position.column === bullet.position.column) {
                     hasBulletHitJetwall = true;
@@ -252,25 +252,26 @@ class Game {
     }
 
     explode(bullet) {
-        const explosionWidth = Math.sqrt(bulletConfig.explosionSize);
-        const x = bullet.position.column - (explosionWidth + 1) / 2 + 1;
-        const y = bullet.position.row - (explosionWidth + 1) / 2 + 1;
+        const blastWidth = Math.sqrt(bulletConfig.blastSize);
+        const x = bullet.position.column - (blastWidth + 1) / 2 + 1;
+        const y = bullet.position.row - (blastWidth + 1) / 2 + 1;
 
         this.ctx.fillStyle = "white";
-        this.ctx.fillRect(x * this.cellWidth, y * this.cellWidth, explosionWidth * this.cellWidth, explosionWidth * this.cellWidth);
+        this.ctx.fillRect(x * this.cellWidth, y * this.cellWidth, blastWidth * this.cellWidth, blastWidth * this.cellWidth);
     }
 
     clearJetwall(bullet) {
-        const explosionWidth = Math.sqrt(bulletConfig.explosionSize);
-        const x = bullet.position.column - (explosionWidth + 1) / 2 + 1;
-        const y = bullet.position.row - (explosionWidth + 1) / 2 + 1;
+        const blastWidth = Math.sqrt(bulletConfig.blastSize);
+        const x = bullet.position.column - (blastWidth + 1) / 2 + 1;
+        const y = bullet.position.row - (blastWidth + 1) / 2 + 1;
 
         console.log(`${x} and ${y}`);
         console.log('clearing Jetwall');
-        for (let column = x; column < x + explosionWidth; column++) {
-            for (let row = y; row < y + explosionWidth; row++) {
-                this.ctx.fillStyle = "red";
-                this.ctx.fillRect(column * this.cellWidth, row * this.cellWidth, this.cellWidth, this.cellWidth);
+        for (let column = x; column < x + blastWidth; column++) {
+            for (let row = y; row < y + blastWidth; row++) {
+
+                
+                setTimeout(() => this.ctx.clearRect(column * this.cellWidth, row * this.cellWidth, this.cellWidth, this.cellWidth), 100);
             }
         }
     }
