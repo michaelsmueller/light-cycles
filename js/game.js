@@ -4,20 +4,29 @@ const player1Config = {
     startingRow: 1,
     startingColumn: 1,
     startingDirection: "right",
-    baseSpeed: 100,         // lower is faster
+    baseSpeed: 100,              // lower is faster
     topSpeed: 50,
     fuel: 50,
-    color: "#00FFFF"        // cyan
+    color: "#00FFFF"             // cyan
 };
 
 const player2Config = {
     startingRow: 50,
     startingColumn: 90,
     startingDirection: "left",
-    baseSpeed: 100,         // lower is faster
+    baseSpeed: 100,              // lower is faster
     topSpeed: 50,
     fuel: 50,
-    color: "#FF0080"       // fuchsia
+    color: "#FF0080"             // fuchsia
+};
+
+const bulletConfig = {
+    speed: 20,
+    color: "#FBF455"             // yellow
+};
+
+const fuelConfig = {
+    color: "#FBF455"             // yellow
 };
 
 let crashPosition = {};
@@ -129,7 +138,7 @@ class Game {
         const x = this.fuel.column * this.cellWidth + this.cellWidth / 2;
         const y = this.fuel.row * this.cellWidth + this.cellWidth / 2;
         const radius = this.cellWidth / 2;
-        this.ctx.fillStyle = "#fbf455";      // yellow
+        this.ctx.fillStyle = fuelConfig.color;
         this.ctx.lineWidth = 0;
         this.ctx.beginPath();
         this.ctx.arc(x, y, radius, 0, 2 * Math.PI);
@@ -186,7 +195,7 @@ class Game {
                     break;
                 case "up":
                     this.ctx.moveTo(x + halfCell, y);
-                    this.ctx.lineTo(x + halfCell, y + 2 * halfCell);
+                    this.ctx.lineTo(x + halfCell, y - 2 * halfCell);
                     break;
                 case "right":
                     this.ctx.moveTo(x + 2 * halfCell, y + halfCell);

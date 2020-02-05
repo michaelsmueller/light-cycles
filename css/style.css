@@ -8,7 +8,7 @@ html, body {
 }
 
 body {
-    background-color: #000;
+    background-color: black;
 }
 
 #container {
@@ -143,7 +143,7 @@ body {
 }
 
 #p1-fuel, #p2-fuel {
-    color: #fbf455;
+    color: #FBF455;
 }
 
 #game-over-screen {
