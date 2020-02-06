@@ -6,7 +6,7 @@ const player1Config = {
     startingDirection: "right",
     baseSpeed: 120,              // lower is faster
     topSpeed: 60,
-    fuel: 100,
+    fuel: 150,
     bulletCost: 20,
     color: "#00FFFF"             // cyan
 };
@@ -17,7 +17,7 @@ const player2Config = {
     startingDirection: "left",
     baseSpeed: 120,              // lower is faster
     topSpeed: 60,
-    fuel: 100,
+    fuel: 150,
     bulletCost: 20,
     color: "#FF0080"             // fuchsia
 };
@@ -245,11 +245,10 @@ class Game {
 
     _hasBulletHitJetwall(bullet, cycle) {
         let hasBulletHitJetwall = false;
-        cycle.jetwall.forEach((position, index) => {
-            if (index > -1) {
+        cycle.jetwall.forEach(position => {
+            if (bullet.age > 1) {
                 if (position.row === bullet.position.row &&
-                    position.column === bullet.position.column &&
-                    cycle.direction !== bullet.direction) {
+                    position.column === bullet.position.column) {
                     hasBulletHitJetwall = true;
                 }
             }

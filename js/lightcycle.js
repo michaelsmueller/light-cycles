@@ -119,7 +119,7 @@ class LightCycle {
 	}
 
 	addFuel() {
-		this.fuel += 20;
+		this.fuel += 50;
 	}
 
 	useFuelForBullet() {
@@ -141,10 +141,12 @@ class Bullet {
         this.direction = direction;
         this.speed = speed;
         this.hitSomething = false;
-        this.timeoutId = undefined;
+		this.timeoutId = undefined;
+		this.age = 0;
     }
 
     moveBulletForward() {
+		this.age += 1;
         switch (this.direction) {
             case "left":
                 this.position.column = (this.position.column - 1 + this.maxColumns) % this.maxColumns;
