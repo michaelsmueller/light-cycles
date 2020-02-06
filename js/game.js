@@ -6,7 +6,7 @@ const player1Config = {
     startingDirection: "right",
     baseSpeed: 120,              // lower is faster
     topSpeed: 60,
-    fuel: 100,
+    fuel: 100000,
     bulletCost: 20,
     color: "#00FFFF"             // cyan
 };
@@ -218,21 +218,26 @@ class Game {
         });
     }
 
-    hasJustBeenFired(bullet, cycle) {
-        if (bullet.position.row === cycle.jetwall[0].row &&
-            bullet.position.column === cycle.jetwall[0].column) {
-            return true;
-        } else {
-            return false;
-        }
+    _isBulletTrailOnJetWall(bullet, cycle) {
+        let isBulletTrailOnJetWall = false;
+        cycle.jetwall.forEach((position, index) => {
+            if (index < 5) {      // only trying to avoid erasing bullet trails near "head"
+                if (position.row === bullet.position.row &&
+                    position.column === bullet.position.column) {
+                    isBulletTrailOnJetWall = true;
+                }
+            }
+        });
+        return isBulletTrailOnJetWall;
     }
 
     eraseBulletTrails() {
         this.bullets.forEach(bullet => {
             const x = bullet.position.column * this.cellWidth;
             const y = bullet.position.row * this.cellWidth;
-            if (!this.hasJustBeenFired(bullet, this.player1) && 
-                !this.hasJustBeenFired(bullet, this.player2)) {
+
+            if (!this._isBulletTrailOnJetWall(bullet, this.player1) && 
+                !this._isBulletTrailOnJetWall(bullet, this.player2)) {
                 this.ctx.clearRect(x, y, this.cellWidth, this.cellWidth);
             }
         });
@@ -241,9 +246,10 @@ class Game {
     _hasBulletHitJetwall(bullet, cycle) {
         let hasBulletHitJetwall = false;
         cycle.jetwall.forEach((position, index) => {
-            if (index > 1) {
+            if (index > -1) {
                 if (position.row === bullet.position.row &&
-                    position.column === bullet.position.column) {
+                    position.column === bullet.position.column &&
+                    cycle.direction !== bullet.direction) {
                     hasBulletHitJetwall = true;
                 }
             }
@@ -286,8 +292,6 @@ class Game {
         const x = bullet.position.column - (blastWidth + 1) / 2 + 1;
         const y = bullet.position.row - (blastWidth + 1) / 2 + 1;
 
-        console.log(`${x} and ${y}`);
-        console.log('clearing Jetwall');
         for (let column = x; column < x + blastWidth; column++) {
             for (let row = y; row < y + blastWidth; row++) {  
                 const blast = {
@@ -295,8 +299,6 @@ class Game {
                     column: column
                 };
                 this.checkBlastHitsPlayers(blast);
-                console.log(`Player 1 crashed ${this.player1.crashed}`);
-                console.log(`Player 2 crashed ${this.player2.crashed}`);
                 if (!this.player1.crashed && !this.player2.crashed) {
                     this.spliceJetwall(blast, this.player1);
                     this.spliceJetwall(blast, this.player2);
