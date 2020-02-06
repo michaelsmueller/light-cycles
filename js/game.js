@@ -300,7 +300,9 @@ class Game {
                 if (!this.player1.crashed && !this.player2.crashed) {
                     this.spliceJetwall(blast, this.player1);
                     this.spliceJetwall(blast, this.player2);
-                    setTimeout(() => this.ctx.clearRect(column * this.cellWidth, row * this.cellWidth, this.cellWidth, this.cellWidth), 10000);    
+                    setTimeout(() => this.ctx.clearRect(column * this.cellWidth, row * this.cellWidth, this.cellWidth, this.cellWidth), 100);    
+                } else {
+                    setTimeout(() => this.drawBlast(bullet), 101);    // repaints full blast after partial clearing
                 }
             }
         }
