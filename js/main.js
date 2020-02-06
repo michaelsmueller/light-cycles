@@ -82,8 +82,6 @@ function start() {
 }
 
 function gameOver(winner, player1Config, player2Config) {
-    stopMusic();
-
     const gameOverScreen = document.getElementById('game-over-screen');
     gameOverScreen.classList.toggle("hidden");
 
