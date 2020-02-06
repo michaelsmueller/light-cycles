@@ -452,7 +452,7 @@ class Game {
     }
 
     explosionLoop(crashPosition) {
-        requestAnimFrame(this.explosionLoop.bind(this));
+        this.explosionInterval = requestAnimFrame(this.explosionLoop.bind(this));
         updateExplosions();
         updateParticles();
         launchExplosion(crashPosition);
@@ -460,6 +460,7 @@ class Game {
 
     stopAnimation() {
         window.cancelAnimationFrame(this.interval);
+        setTimeout(() => window.cancelAnimationFrame(this.explosionInterval), 1000);
     }
 
     start() {
