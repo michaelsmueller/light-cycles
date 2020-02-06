@@ -8,7 +8,7 @@ function setupCanvas() {
     canvas = document.getElementById("game-grid");
     canvas.classList.toggle("hidden", false);
     canvas.width = 1410;
-    canvas.height = 840;
+    canvas.height = 810;
     ctx = canvas.getContext('2d');
 }
 
