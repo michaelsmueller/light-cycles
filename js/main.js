@@ -8,7 +8,7 @@ function setupCanvas() {
     canvas = document.getElementById("game-grid");
     canvas.classList.toggle("hidden", false);
     canvas.width = 1410;
-    canvas.height = 840;
+    canvas.height = 810;
     ctx = canvas.getContext('2d');
 }
 
@@ -41,7 +41,7 @@ function startAudio() {
     bufferLoader = new BufferLoader(
         audioCtx,
         [
-            "audio/the-grid.mp3" // Daft Punk - The Grid (Joseph Darwed Orchestral Rework) [Tron Soundtrack] [HD 1080p]
+            "audio/the-grid-32kbps.mp3" // Daft Punk - The Grid (Joseph Darwed Orchestral Rework) [Tron Soundtrack] [HD 1080p]
         ],
         playMusic
         );
@@ -82,8 +82,6 @@ function start() {
 }
 
 function gameOver(winner, player1Config, player2Config) {
-    stopMusic();
-
     const gameOverScreen = document.getElementById('game-over-screen');
     gameOverScreen.classList.toggle("hidden");
 
@@ -123,10 +121,11 @@ function hideStartScreen() {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM content loaded');
+    startAudio();
     const startButton = document.getElementById('start');
     startButton.onclick = () => {
         console.log('Start game button clicked');
-        startAudio();
+        audioCtx.resume();
         hideStartScreen();
         html.requestFullscreen();
         // hideScrollBars();
