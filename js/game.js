@@ -273,11 +273,6 @@ class Game {
     checkBlastHitsPlayers(blast) {
         const cycle1 = this.player1.jetwall[0];
         const cycle2 = this.player2.jetwall[0];
-
-        console.log(`blast ${blast.row} ${blast.column}}`);
-        console.log(`player 1 ${cycle1.row} ${cycle1.column}}`);
-        console.log(`player 2 ${cycle2.row} ${cycle2.column}}`);
-
         if (cycle1.row === blast.row && cycle1.column === blast.column) {
             this.player1.crashed = true;
         }
@@ -300,9 +295,13 @@ class Game {
                     column: column
                 };
                 this.checkBlastHitsPlayers(blast);
-                this.spliceJetwall(blast, this.player1);
-                this.spliceJetwall(blast, this.player2);
-                setTimeout(() => this.ctx.clearRect(column * this.cellWidth, row * this.cellWidth, this.cellWidth, this.cellWidth), 100);
+                console.log(`Player 1 crashed ${this.player1.crashed}`);
+                console.log(`Player 2 crashed ${this.player2.crashed}`);
+                if (!this.player1.crashed && !this.player2.crashed) {
+                    this.spliceJetwall(blast, this.player1);
+                    this.spliceJetwall(blast, this.player2);
+                    setTimeout(() => this.ctx.clearRect(column * this.cellWidth, row * this.cellWidth, this.cellWidth, this.cellWidth), 10000);    
+                }
             }
         }
     }
