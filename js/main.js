@@ -121,10 +121,11 @@ function hideStartScreen() {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM content loaded');
+    startAudio();
     const startButton = document.getElementById('start');
     startButton.onclick = () => {
         console.log('Start game button clicked');
-        startAudio();
+        audioCtx.resume();
         hideStartScreen();
         html.requestFullscreen();
         // hideScrollBars();
