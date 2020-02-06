@@ -61,7 +61,7 @@ function playMusic(bufferList) {
 }
 
 function stopMusic() {
-    music.stop(0);
+    // music.stop(0);
 }
 
 function startCycleAudio() {
@@ -123,7 +123,7 @@ function hideStartScreen() {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM content loaded');
-    startAudio();
+    // startAudio();
     const startButton = document.getElementById('start');
     startButton.onclick = () => {
         console.log('Start game button clicked');

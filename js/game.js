@@ -350,6 +350,8 @@ class Game {
     }
     
     _assignControlsToKeys() {
+        let player1ShotFired = false;
+        let player2ShotFired = false;
         document.addEventListener("keydown", e => {
             console.log(`Keydown ${e.keyCode} ${e.key}`);
             if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
@@ -373,7 +375,8 @@ class Game {
                     this.player1.burnFuel();
                     break;
                 case 50: // 2
-                    if (this.player1.fuel >= player1Config.bulletCost) {
+                    if (!player1ShotFired && this.player1.fuel >= player1Config.bulletCost) {
+                        player1ShotFired = true;
                         this.player1.useFuelForBullet();
                         this.shoot(this.player1);
                     }
@@ -395,7 +398,8 @@ class Game {
                     this.player2.burnFuel();
                     break;
                 case 190: // . period
-                    if (this.player2.fuel >= player2Config.bulletCost) {
+                    if (!player2ShotFired && this.player2.fuel >= player2Config.bulletCost) {
+                        player2ShotFired = true;
                         this.player2.useFuelForBullet();
                         this.shoot(this.player2);
                     }
@@ -409,9 +413,15 @@ class Game {
                     this.player1.slowDown();
                     this.player1.stopBurningFuel();
                     break;
+                case 50: // 2
+                    player1ShotFired = false;
+                    break;
                 case 188: // comma
                     this.player2.slowDown();
                     this.player2.stopBurningFuel();
+                    break;
+                case 190: // . period
+                    player2ShotFired = false;
                     break;
             }
         });
