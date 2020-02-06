@@ -6,7 +6,7 @@ const player1Config = {
     startingDirection: "right",
     baseSpeed: 120,              // lower is faster
     topSpeed: 60,
-    fuel: 100000,
+    fuel: 100,
     bulletCost: 20,
     color: "#00FFFF"             // cyan
 };
