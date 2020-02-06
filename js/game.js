@@ -394,7 +394,10 @@ class Game {
                     this.player1.burnFuel();
                     break;
                 case 50: // 2
-                    if (!player1ShotFired && this.player1.fuel >= player1Config.bulletCost) {
+                    if (e.repeat) {
+                        console.log('Repeat keycode 50');
+                        return;
+                    } else if (!player1ShotFired && this.player1.fuel >= player1Config.bulletCost) {
                         player1ShotFired = true;
                         this.player1.useFuelForBullet();
                         this.shoot(this.player1);
@@ -417,7 +420,10 @@ class Game {
                     this.player2.burnFuel();
                     break;
                 case 190: // . period
-                    if (!player2ShotFired && this.player2.fuel >= player2Config.bulletCost) {
+                    if (e.repeat) {
+                        console.log('Repeat keycode 190');
+                        return;
+                    } else if (!player2ShotFired && this.player2.fuel >= player2Config.bulletCost) {
                         player2ShotFired = true;
                         this.player2.useFuelForBullet();
                         this.shoot(this.player2);
