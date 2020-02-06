@@ -65,11 +65,11 @@ class Game {
 
     _drawJetwall() {
         this.ctx.fillStyle = player1Config.color;
-        const cycle1 = game.player1.jetwall[0];
+        const cycle1 = this.player1.jetwall[0];
         this.ctx.fillRect(cycle1.column * this.cellWidth, cycle1.row * this.cellWidth, this.cellWidth, this.cellWidth);
 
         this.ctx.fillStyle = player2Config.color;
-        const cycle2 = game.player2.jetwall[0];
+        const cycle2 = this.player2.jetwall[0];
         this.ctx.fillRect(cycle2.column * this.cellWidth, cycle2.row * this.cellWidth, this.cellWidth, this.cellWidth);
     }
     
@@ -241,7 +241,7 @@ class Game {
     _hasBulletHitJetwall(bullet, cycle) {
         let hasBulletHitJetwall = false;
         cycle.jetwall.forEach((position, index) => {
-            if (index > 2) {
+            if (index > 1) {
                 if (position.row === bullet.position.row &&
                     position.column === bullet.position.column) {
                     hasBulletHitJetwall = true;
@@ -251,7 +251,7 @@ class Game {
         return hasBulletHitJetwall;
     }
 
-    explode(bullet) {
+    drawBlast(bullet) {
         const blastWidth = Math.sqrt(bulletConfig.blastSize);
         const x = bullet.position.column - (blastWidth + 1) / 2 + 1;
         const y = bullet.position.row - (blastWidth + 1) / 2 + 1;
@@ -270,6 +270,22 @@ class Game {
         });
     }
 
+    checkBlastHitsPlayers(blast) {
+        const cycle1 = this.player1.jetwall[0];
+        const cycle2 = this.player2.jetwall[0];
+
+        console.log(`blast ${blast.row} ${blast.column}}`);
+        console.log(`player 1 ${cycle1.row} ${cycle1.column}}`);
+        console.log(`player 2 ${cycle2.row} ${cycle2.column}}`);
+
+        if (cycle1.row === blast.row && cycle1.column === blast.column) {
+            this.player1.crashed = true;
+        }
+        if (cycle2.row === blast.row && cycle2.column === blast.column) {
+            this.player2.crashed = true;
+        }
+    }
+
     clearJetwall(bullet) {
         const blastWidth = Math.sqrt(bulletConfig.blastSize);
         const x = bullet.position.column - (blastWidth + 1) / 2 + 1;
@@ -283,6 +299,7 @@ class Game {
                     row: row,
                     column: column
                 };
+                this.checkBlastHitsPlayers(blast);
                 this.spliceJetwall(blast, this.player1);
                 this.spliceJetwall(blast, this.player2);
                 setTimeout(() => this.ctx.clearRect(column * this.cellWidth, row * this.cellWidth, this.cellWidth, this.cellWidth), 100);
@@ -296,7 +313,7 @@ class Game {
                 this._hasBulletHitJetwall(bullet, this.player2)) {
                 bullet.hitSomething = true;
                 bullet.stop();
-                this.explode(bullet);
+                this.drawBlast(bullet);
                 this.clearJetwall(bullet);
                 this.bullets.splice(this.bullets.indexOf(bullet), 1);
             }
@@ -331,7 +348,7 @@ class Game {
 
     _update() {
         let gameOver = false;
-        game.updateScore();
+        this.updateScore();
         if (this.bullets.length > 0) {
             this.drawBullets();
             this.eraseBulletTrails();
