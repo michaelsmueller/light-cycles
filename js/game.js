@@ -257,6 +257,16 @@ class Game {
         return hasBulletHitJetwall;
     }
 
+    _hasBulletHitFuel(bullet) {
+        let hasBulletHitFuel = false;
+        if (this.fuel.row === bullet.position.row &&
+            this.fuel.column === bullet.position.column) {
+            hasBulletHitFuel = true;
+            console.log("Bullet hit fuel");
+        }
+        return hasBulletHitFuel;
+    }
+
     drawBlast(bullet) {
         const blastWidth = Math.sqrt(bulletConfig.blastSize);
         const x = bullet.position.column - (blastWidth + 1) / 2 + 1;
@@ -310,10 +320,19 @@ class Game {
         }
     }
 
+    _hasBulletHitSomething(bullet) {
+        if (this._hasBulletHitJetwall(bullet, this.player1) ||
+            this._hasBulletHitJetwall(bullet, this.player2) ||
+            this._hasBulletHitFuel(bullet)) {
+                return true;
+        } else {
+            return false;
+        }
+    }
+
     checkBulletStrike() {
         this.bullets.forEach(bullet => {
-            if (this._hasBulletHitJetwall(bullet, this.player1) || 
-                this._hasBulletHitJetwall(bullet, this.player2)) {
+            if (this._hasBulletHitSomething(bullet)) {
                 bullet.hitSomething = true;
                 bullet.stop();
                 this.drawBlast(bullet);
