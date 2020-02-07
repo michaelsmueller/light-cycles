@@ -25,7 +25,7 @@ const player2Config = {
 const bulletConfig = {
     speed: 20,
     bulletWidth: 5,
-    blastSize: 25,           // square of an odd number
+    blastSize: 25,               // square of an odd number
     color: "#FBF455"             // yellow
 };
 
@@ -34,6 +34,7 @@ const fuelConfig = {
 };
 
 let crashPosition = {};
+let eventListenersAdded = false;
 
 class Game {
     constructor(ctx, canvas, updateScoreCallback, gameOverCallback) {
@@ -371,85 +372,88 @@ class Game {
     _assignControlsToKeys() {
         let player1ShotFired = false;
         let player2ShotFired = false;
-        document.addEventListener("keydown", e => {
-            console.log(`Keydown ${e.keyCode} ${e.key}`);
-            if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
-                e.preventDefault();
-            }
-            switch (e.keyCode) {
-                case 68: // d
-                    this.player1.goLeft();
-                    break;
-                case 82: // r
-                    this.player1.goUp();
-                    break;
-                case 71: // g
-                    this.player1.goRight();
-                    break;
-                case 70: // f
-                    this.player1.goDown();
-                    break;
-                case 49: // 1
-                    this.player1.speedUp();
-                    this.player1.burnFuel();
-                    break;
-                case 50: // 2
-                    if (e.repeat) {
-                        console.log('Repeat keycode 50');
-                        return;
-                    } else if (!player1ShotFired && this.player1.fuel >= player1Config.bulletCost) {
-                        player1ShotFired = true;
-                        this.player1.useFuelForBullet();
-                        this.shoot(this.player1);
-                    }
-                    break;
-                case 37: // left arrow
-                    this.player2.goLeft();
-                    break;
-                case 38: // up arrow up
-                    this.player2.goUp();
-                    break;
-                case 39: // right arrow
-                    this.player2.goRight();
-                    break;
-                case 40: // down arrow
-                    this.player2.goDown();
-                    break;
-                case 188: // , comma
-                    this.player2.speedUp();
-                    this.player2.burnFuel();
-                    break;
-                case 190: // . period
-                    if (e.repeat) {
-                        console.log('Repeat keycode 190');
-                        return;
-                    } else if (!player2ShotFired && this.player2.fuel >= player2Config.bulletCost) {
-                        player2ShotFired = true;
-                        this.player2.useFuelForBullet();
-                        this.shoot(this.player2);
-                    }
-                    break;
-            }
-        });
-        document.addEventListener("keyup", e => {
-            console.log(`Keyup ${e.keyCode} ${e.key}`);
-            switch (e.keyCode) {
-                case 49: // 1
-                    this.player1.slowDown();
-                    this.player1.stopBurningFuel();
-                    break;
-                case 50: // 2
-                    player1ShotFired = false;
-                    break;
-                case 188: // comma
-                    this.player2.slowDown();
-                    this.player2.stopBurningFuel();
-                    break;
-                case 190: // . period
-                    player2ShotFired = false;
-                    break;
-            }
-        });
+        if (!eventListenersAdded) {
+            eventListenersAdded = true;
+            document.addEventListener("keydown", e => {
+                console.log(`Keydown ${e.keyCode} ${e.key}`);
+                if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+                    e.preventDefault();
+                }
+                switch (e.keyCode) {
+                    case 68: // d
+                        this.player1.goLeft();
+                        break;
+                    case 82: // r
+                        this.player1.goUp();
+                        break;
+                    case 71: // g
+                        this.player1.goRight();
+                        break;
+                    case 70: // f
+                        this.player1.goDown();
+                        break;
+                    case 49: // 1
+                        this.player1.speedUp();
+                        this.player1.burnFuel();
+                        break;
+                    case 50: // 2
+                        if (e.repeat) {
+                            console.log('Repeat keycode 50');
+                            return;
+                        } else if (!player1ShotFired && this.player1.fuel >= player1Config.bulletCost) {
+                            player1ShotFired = true;
+                            this.player1.useFuelForBullet();
+                            this.shoot(this.player1);
+                        }
+                        break;
+                    case 37: // left arrow
+                        this.player2.goLeft();
+                        break;
+                    case 38: // up arrow up
+                        this.player2.goUp();
+                        break;
+                    case 39: // right arrow
+                        this.player2.goRight();
+                        break;
+                    case 40: // down arrow
+                        this.player2.goDown();
+                        break;
+                    case 188: // , comma
+                        this.player2.speedUp();
+                        this.player2.burnFuel();
+                        break;
+                    case 190: // . period
+                        if (e.repeat) {
+                            console.log('Repeat keycode 190');
+                            return;
+                        } else if (!player2ShotFired && this.player2.fuel >= player2Config.bulletCost) {
+                            player2ShotFired = true;
+                            this.player2.useFuelForBullet();
+                            this.shoot(this.player2);
+                        }
+                        break;
+                }
+            });
+            document.addEventListener("keyup", e => {
+                console.log(`Keyup ${e.keyCode} ${e.key}`);
+                switch (e.keyCode) {
+                    case 49: // 1
+                        this.player1.slowDown();
+                        this.player1.stopBurningFuel();
+                        break;
+                    case 50: // 2
+                        player1ShotFired = false;
+                        break;
+                    case 188: // comma
+                        this.player2.slowDown();
+                        this.player2.stopBurningFuel();
+                        break;
+                    case 190: // . period
+                        player2ShotFired = false;
+                        break;
+                }
+            });
+        }
     }
 
     clearGrid() {

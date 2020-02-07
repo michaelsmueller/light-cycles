@@ -72,10 +72,11 @@ function startCycleAudio() {
 }
 
 function start() {
-    console.log('Instantiating game');
     if (game) {
+        console.log('Resetting game');
         game.reset();
     } else {
+        console.log('Instantiating game');
         game = new Game(ctx, canvas, updateScore, gameOver);
     }
     game.start();
