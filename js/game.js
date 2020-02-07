@@ -297,11 +297,17 @@ class Game {
         }
     }
 
-    clearJetwall(bullet) {
+    checkBlastHitsFuel(blast) {
+        if (this.fuel.row === blast.row && this.fuel.column === blast.column) {
+            this.fuel.destroyed = true;
+        }
+    }
+
+    inflictBlastDamage(bullet) {
+        console.log("Calling inflict BlastDamage");
         const blastWidth = Math.sqrt(bulletConfig.blastSize);
         const x = bullet.position.column - (blastWidth + 1) / 2 + 1;
         const y = bullet.position.row - (blastWidth + 1) / 2 + 1;
-
         for (let column = x; column < x + blastWidth; column++) {
             for (let row = y; row < y + blastWidth; row++) {  
                 const blast = {
@@ -309,6 +315,7 @@ class Game {
                     column: column
                 };
                 this.checkBlastHitsPlayers(blast);
+                this.checkBlastHitsFuel(blast);
                 if (!this.player1.crashed && !this.player2.crashed) {
                     this.spliceJetwall(blast, this.player1);
                     this.spliceJetwall(blast, this.player2);
@@ -317,6 +324,10 @@ class Game {
                     setTimeout(() => this.drawBlast(bullet), 101);    // repaints full blast after partial clearing
                 }
             }
+        }
+        if (this.fuel.destroyed) {
+            this.generateFuel();
+            this.drawFuel();
         }
     }
 
@@ -336,10 +347,13 @@ class Game {
                 bullet.hitSomething = true;
                 bullet.stop();
                 this.drawBlast(bullet);
-                this.clearJetwall(bullet);
+                this.inflictBlastDamage(bullet);
                 this.bullets.splice(this.bullets.indexOf(bullet), 1);
             }
         });
+        if (this.fuel.destroyed) {
+            this.fuel.destroyed = false;
+        }
     }
 
     stopBullets() {

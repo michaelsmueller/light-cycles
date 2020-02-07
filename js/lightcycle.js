@@ -182,7 +182,8 @@ class Fuel {
         this.maxRows = grid.maxRows;
         this.maxColumns = grid.maxColumns;
         this.row = null;
-        this.column = null;
+		this.column = null;
+		this.destroyed = false;
     }
 
     reset() {
