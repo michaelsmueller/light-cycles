@@ -2,7 +2,7 @@
 
 let ctx, game, canvas, audioCtx, bufferLoader, music, cycleSound;
 let explosions = [], particles = [];
-let mute = true;
+let mute = false;
 let html = document.documentElement;
 
 function setupCanvas() {
