@@ -2,6 +2,7 @@
 
 let ctx, game, canvas, audioCtx, bufferLoader, music, cycleSound;
 let explosions = [], particles = [];
+let mute = true;
 let html = document.documentElement;
 
 function setupCanvas() {
@@ -122,11 +123,15 @@ function hideStartScreen() {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     console.log('DOM content loaded');
-    startAudio();
+    if (!mute) {
+        startAudio();
+    }
     const startButton = document.getElementById('start');
     startButton.onclick = () => {
         console.log('Start game button clicked');
-        audioCtx.resume();
+        if (!mute) {
+            audioCtx.resume();
+        }
         hideStartScreen();
         html.requestFullscreen();
         // hideScrollBars();
